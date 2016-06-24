@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
@@ -31,7 +31,7 @@
     "numberOfNodes": {
       "type": "int",
       "defaultValue": 3,
-      "minValue": 3,
+      "minValue": 2,
       "maxValue": 30,
       "metadata": {
         "description": "Number of Openshift Nodes to deploy (max 30)"
@@ -485,3 +485,4 @@
     }
   }
 }
+
