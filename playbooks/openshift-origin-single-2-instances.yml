@@ -1,0 +1,39 @@
+---
+
+- name: Single Master / 2 Instanzen / Pull-Push Ticketmonster
+  hosts: masters
+
+  roles:
+    
+    - role: openshift-origin-single
+      master_hostname: dev-master
+
+    - role: openshift-auth-htaccess
+      master_hostname: dev-master
+
+    - role: openshift-docker-registry-internal
+      master_hostname: dev-master
+
+    - role: openshift-default-router
+      master_hostname: dev-master
+
+    - role: ticketmonster-install
+      master_hostname: dev-master
+
+    - role: openshift-origin-single
+      master_hostname: prod-master
+
+    - role: openshift-auth-htaccess
+      master_hostname: prod-master
+
+    - role: openshift-docker-registry-internal
+      master_hostname: prod-master
+
+    - role: openshift-default-router
+      master_hostname: prod-master
+
+    - role: ticketmonster-pull-from-dev
+      master_dev_hostname: dev-master
+      master_prod_hostname: prod-master
+
+    

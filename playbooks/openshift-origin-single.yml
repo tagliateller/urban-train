@@ -1,0 +1,17 @@
+---
+
+- name: Single Master / No Nodes OpenShift Origin
+  hosts: masters
+
+  roles:
+    
+    - role: openshift-origin-single
+    
+    - role: openshift-auth-htaccess
+
+    - role: openshift-docker-registry-internal
+
+    - role: openshift-default-router
+
+    - role: ticketmonster-install
+    
