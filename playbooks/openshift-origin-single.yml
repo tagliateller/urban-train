@@ -3,6 +3,9 @@
 - name: Single Master / No Nodes OpenShift Origin
   hosts: masters
 
+  vars_files:
+    - secrets.yml
+
   roles:
     
     - role: openshift-origin-single
