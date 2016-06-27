@@ -160,7 +160,7 @@
       "apiVersion": "2013-03-01",
       "dependsOn": [
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
-        "[concat('Microsoft.Storage/storageAccounts/', variables('masterStorageName'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('masterStorageName'))]"
       ],
       "properties": {
         "mode": "Incremental",
@@ -192,9 +192,6 @@
           },
           "baseTemplateUrl": {
             "value": "[variables('baseTemplateUrl')]"
-          },
-          "routerExtIP": {
-            "value": "[reference('infranode').outputs.pip.value]"
           },
           "imageReference": {
             "value": "[variables(parameters('image'))]"
