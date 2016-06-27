@@ -1,0 +1,2 @@
+[masters]
+origin-master.westeurope.cloudapp.azure.com ansible_user=azureuser
