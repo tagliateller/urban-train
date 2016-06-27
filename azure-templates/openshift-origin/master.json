@@ -29,9 +29,6 @@
     "baseTemplateUrl": {
       "type": "string"
     },
-    "routerExtIP": {
-      "type": "string"
-    },
     "imageReference": {
       "type": "object",
       "metadata": {
