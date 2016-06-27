@@ -1,5 +1,7 @@
 - name: install packages
-  yum: name={{ item }} state=present
+  yum: name={{ item }} state=installed
+  become: yes
+  become_user: root
   with_items:
     - wget 
     - git 
@@ -12,36 +14,58 @@
     
 - name: install fedora repo
   yum: name=https://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-6.noarch.rpm state=present  
+  become: yes
+  become_user: root
 
 - name: replace repo
   command: sed -i -e "s/^enabled=1/enabled=0/" /etc/yum.repos.d/epel.repo
+  become: yes
+  become_user: root
 
 - name: install packages
-  yum: name={{ item }} enablerepo=epel state=present
+  yum: name={{ item }} enablerepo=epel state=installed
+  become: yes
+  become_user: root
   with_items:
     - ansible1.9
     - pyOpenSSL
 
 - name: clone git repo
   command: git clone https://github.com/openshift/openshift-ansible /opt/openshift-ansible
+  become: yes
+  become_user: root
   
 - name: install docker
-  yum: name=docker state=present
+  yum: name=docker state=installed
+  become: yes
+  become_user: root
   
 - name: set insecure registry 
   command: sed -i -e "s#^OPTIONS='--selinux-enabled'#OPTIONS='--selinux-enabled --insecure-registry 172.30.0.0/16'#" /etc/sysconfig/docker
+  become: yes
+  become_user: root
 
 - name: docker storage setup setzen
   template: src=docker-storage-setup.j2 dest=/etc/sysconfig/docker-storage-setup                                                                            
+  become: yes
+  become_user: root
 
 - name: ansible hosts setzen
   template: src=ansible-hosts.j2 dest=/etc/ansible/hosts                                                                            
+  become: yes
+  become_user: root
 
 - name: create dir for htpasswd
   file: path=/etc/origin/master state=directory
+  become: yes
+  become_user: root
 
 - name: setup htpasswd
   command: htpasswd -cb /etc/origin/master/htpasswd {{ openshift_console_user }} {{ openshift_console_password }}
+  become: yes
+  become_user: root
 
 - name: setup install script
   template: src=openshift-install.sh.j2 dest=/home/{{ ansible_user }}/openshift-install.sh mode=755
+  become: yes
+  become_user: root
