@@ -1,0 +1,112 @@
+- name: install packages
+  yum: name={{ item }} state=installed
+  become: yes
+  become_user: root
+  with_items:
+    - wget 
+    - git 
+    - net-tools 
+    - bind-utils 
+    - iptables-services 
+    - bridge-utils 
+    - bash-completion 
+    - httpd-tools
+    
+---
+# Fail the play if it runs on an unsupported platform.
+- name: Assert platform is supported
+  tags: maven
+  assert:
+    that:
+      - ansible_os_family in maven_supported_platforms
+
+- name: Load version vars
+  tags: maven
+  include: ../../silpion.lib/tasks/version-specific-vars.yml
+  vars:
+    version: "{{ maven_version }}"
+
+- name: Assert version vars
+  tags: maven
+  assert:
+    that:
+      - maven_redis_sha256sum not in (None, "")
+
+- name: Include data persintency
+  tags: maven
+  include: ../../silpion.lib/tasks/datapersistency.yml
+
+- name: Download Maven
+  tags: maven
+  include: ../../silpion.lib/tasks/get_url.yml
+  vars:
+    url: "{{ maven_mirror }}/{{ maven_redis_filename }}"
+    filename: "{{ maven_redis_filename }}"
+
+- name: Upload installation archive
+  tags: maven
+  include: ../../silpion.lib/tasks/copy.yml
+  vars:
+    filename: "{{ maven_redis_filename }}"
+
+- name: Install Maven installation directory
+  tags: maven
+  become: true
+  file:
+    state: directory
+    owner: 0
+    group: 0
+    mode: 0755
+    dest: "{{ maven_install_dir }}"
+
+- name: Install Maven
+  tags: maven
+  become: true
+  unarchive:
+    src: "{{ lib_persistent_data_path_remote }}/{{ maven_redis_filename }}"
+    dest: "{{ maven_install_dir }}"
+    copy: false
+    creates: "{{ maven_install_dir }}/apache-maven-{{ maven_version }}"
+
+- name: Install Maven bin directory
+  tags: maven
+  become: true
+  file:
+    state: directory
+    owner: 0
+    group: 0
+    mode: 0755
+    dest: "{{ maven_bin_path }}"
+
+- name: Install Maven binary
+  tags: maven
+  become: true
+  file:
+    state: link
+    force: true
+    src: "{{ maven_install_dir }}/apache-maven-{{ maven_version }}/bin/mvn"
+    dest: "{{ maven_bin_path }}/mvn"
+
+- name: Install Ansible facts.d directory
+  tags: maven
+  become: true
+  file:
+    state: directory
+    dest: /etc/ansible/facts.d
+    owner: 0
+    group: 0
+    mode: 0755
+
+- name: Install Maven facts
+  tags: maven
+  become: true
+  template:
+    src: facts.j2
+    dest: /etc/ansible/facts.d/maven.fact
+    owner: 0
+    group: 0
+    mode: 0644
+
+- name: Re-read facts
+  tags: maven
+  setup:
