@@ -1,5 +1,9 @@
 ---
 
+maven_version: 3.3.9
+
+maven_install_path: maven
+
 # mvn binary gets symlinked into {{ maven_bin_path }}
 maven_bin_path: '/usr/local/bin'
 
