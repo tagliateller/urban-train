@@ -159,7 +159,7 @@
         "description": "The size of the AppSrv Virtual Machine."
       }
     },
-    "devVMSize": {
+    "dbSrvVMSize": {
       "type": "string",
       "defaultValue": "Standard_A0",
       "allowedValues": [
