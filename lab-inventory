@@ -1,3 +1,0 @@
-[masters]
-#origin-master.westeurope.cloudapp.azure.com ansible_user=azureuser
-rdo-server.priv.tagliateller.nu ansible_user=robert.bloy

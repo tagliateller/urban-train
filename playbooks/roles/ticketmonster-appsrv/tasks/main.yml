@@ -1,35 +1,55 @@
 ---
 - name: Install Java 1.7 and some basic dependencies
   yum: name={{item}} state=present
+  become: yes
+  become_user: root
   with_items:
-   - unzip
    - java-1.7.0-openjdk
 
 - name: Download JBoss from jboss.org
-  get_url: url=https://www.jboss.org/download-manager/file/jboss-eap-7.0.0.zip dest=/opt/jboss-eap-7.0.0.zip
+  get_url: url=http://download.jboss.org/jbossas/7.1/jboss-as-7.1.1.Final/jboss-as-7.1.1.Final.zip dest=/opt/jboss-as-7.1.1.Final.zip
+  become: yes
+  become_user: root
 
 - name: Extract archive
-  command: chdir=/usr/share /usr/bin/unzip -q /opt/jboss-eap-7.0.0.zip creates=/usr/share/jboss-eap
+  unarchive: src=/opt/jboss-as-7.1.1.Final.zip dest=/usr/share/ copy=no creates=/usr/share/jboss-as
+#  command: chdir=/usr/share /usr/bin/unzip -q /opt/jboss-as-7.1.1.Final.zip creates=/usr/share/jboss-as
+  become: yes
+  become_user: root
 
   # Rename the dir to avoid encoding the version in the init script
 - name: Rename install directory
-  command: chdir=/usr/share /bin/mv jboss-eap-7.0.0 jboss-as creates=/usr/share/jboss-eap
+  command: chdir=/usr/share /bin/mv jboss-as-7.1.1.Final jboss-as creates=/usr/share/jboss-as
+  become: yes
+  become_user: root
 
 - name: Copying standalone.xml configuration file
   template: src=standalone.xml dest=/usr/share/jboss-as/standalone/configuration/
+  become: yes
+  become_user: root
   notify: restart jboss
 
 - name: Add group "jboss"
   group: name=jboss
+  become: yes
+  become_user: root
 
 - name: Add user "jboss"
   user: name=jboss group=jboss home=/usr/share/jboss-as
+  become: yes
+  become_user: root
 
 - name: Change ownership of JBoss installation
   file: path=/usr/share/jboss-as/ owner=jboss group=jboss state=directory recurse=yes
+  become: yes
+  become_user: root
 
 - name: Copy the init script
   copy: src=jboss-as-standalone.sh dest=/etc/init.d/jboss mode=0755
+  become: yes
+  become_user: root
 
 - name: Enable JBoss to be started at boot
   service: name=jboss enabled=yes state=started 
+  become: yes
+  become_user: root

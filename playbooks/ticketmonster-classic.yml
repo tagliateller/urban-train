@@ -1,8 +1,16 @@
 ---
 
-- name: Install Ticketmonster
+#- name: Install Ticketmonster
+#  hosts: dev
+#  roles:
+#    - ticketmonster-dev-station
 
+- name: Install JBoss
+  hosts: appsrv
   roles:
-    - ticketmonster-dev-station
     - ticketmonster-appsrv
-    - ticketmonster-dbsrv
+
+#- name: Install DB
+#  hosts: dbsrv
+#  roles:
+#    - ticketmonster-dbsrv
