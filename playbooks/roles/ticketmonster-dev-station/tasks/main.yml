@@ -1,9 +1,10 @@
+---
 - name: install packages
   yum: name={{ item }} state=installed
   become: yes
   become_user: root
   with_items:
-    - java7 
+    - java-1.7.0-openjdk 
     - git
 
 - name: download maven
