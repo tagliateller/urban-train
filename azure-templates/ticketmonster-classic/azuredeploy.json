@@ -15,11 +15,25 @@
         "description": "SSH rsa public key file as a string."
       }
     },
-    "masterDnsName": {
+    "devDnsName": {
       "type": "string",
       "minLength": 1,
       "metadata": {
-        "description": "Globally unique DNS Name for the Openshift Master Webinterface."
+        "description": "Globally unique DNS Name for the Ticketmonster Dev Machine."
+      }
+    },
+    "appSrvDnsName": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "Globally unique DNS Name for the Ticketmonster JBoss Machine."
+      }
+    },
+    "dbSrvDnsName": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "Globally unique DNS Name for the Ticketmonster MariaDB Machine."
       }
     },
     "image": {
@@ -33,9 +47,9 @@
         "description": "OS to use. Centos or Redhat Enterprise Linux"
       }
     },
-    "masterVMSize": {
+    "devVMSize": {
       "type": "string",
-      "defaultValue": "Standard_D2_v2",
+      "defaultValue": "Standard_A0",
       "allowedValues": [
         "Standard_A0",
         "Standard_A1",
@@ -86,24 +100,133 @@
         "Standard_GS5"
       ],
       "metadata": {
-        "description": "The size of the Master Virtual Machine."
+        "description": "The size of the Dev Virtual Machine."
       }
-    }
+    },
+    "appSrvVMSize": {
+      "type": "string",
+      "defaultValue": "Standard_A0",
+      "allowedValues": [
+        "Standard_A0",
+        "Standard_A1",
+        "Standard_A2",
+        "Standard_A3",
+        "Standard_A4",
+        "Standard_A5",
+        "Standard_A6",
+        "Standard_A7",
+        "Standard_A8",
+        "Standard_A9",
+        "Standard_A10",
+        "Standard_A11",
+        "Standard_D1",
+        "Standard_D2",
+        "Standard_D3",
+        "Standard_D4",
+        "Standard_D11",
+        "Standard_D12",
+        "Standard_D13",
+        "Standard_D14",
+        "Standard_D1_v2",
+        "Standard_D2_v2",
+        "Standard_D3_v2",
+        "Standard_D4_v2",
+        "Standard_D5_v2",
+        "Standard_D11_v2",
+        "Standard_D12_v2",
+        "Standard_D13_v2",
+        "Standard_D14_v2",
+        "Standard_G1",
+        "Standard_G2",
+        "Standard_G3",
+        "Standard_G4",
+        "Standard_G5",
+        "Standard_DS1",
+        "Standard_DS2",
+        "Standard_DS3",
+        "Standard_DS4",
+        "Standard_DS11",
+        "Standard_DS12",
+        "Standard_DS13",
+        "Standard_DS14",
+        "Standard_GS1",
+        "Standard_GS2",
+        "Standard_GS3",
+        "Standard_GS4",
+        "Standard_GS5"
+      ],
+      "metadata": {
+        "description": "The size of the AppSrv Virtual Machine."
+      }
+    },
+    "devVMSize": {
+      "type": "string",
+      "defaultValue": "Standard_A0",
+      "allowedValues": [
+        "Standard_A0",
+        "Standard_A1",
+        "Standard_A2",
+        "Standard_A3",
+        "Standard_A4",
+        "Standard_A5",
+        "Standard_A6",
+        "Standard_A7",
+        "Standard_A8",
+        "Standard_A9",
+        "Standard_A10",
+        "Standard_A11",
+        "Standard_D1",
+        "Standard_D2",
+        "Standard_D3",
+        "Standard_D4",
+        "Standard_D11",
+        "Standard_D12",
+        "Standard_D13",
+        "Standard_D14",
+        "Standard_D1_v2",
+        "Standard_D2_v2",
+        "Standard_D3_v2",
+        "Standard_D4_v2",
+        "Standard_D5_v2",
+        "Standard_D11_v2",
+        "Standard_D12_v2",
+        "Standard_D13_v2",
+        "Standard_D14_v2",
+        "Standard_G1",
+        "Standard_G2",
+        "Standard_G3",
+        "Standard_G4",
+        "Standard_G5",
+        "Standard_DS1",
+        "Standard_DS2",
+        "Standard_DS3",
+        "Standard_DS4",
+        "Standard_DS11",
+        "Standard_DS12",
+        "Standard_DS13",
+        "Standard_DS14",
+        "Standard_GS1",
+        "Standard_GS2",
+        "Standard_GS3",
+        "Standard_GS4",
+        "Standard_GS5"
+      ],
+      "metadata": {
+        "description": "The size of the DB Virtual Machine."
+      }
+    }    
   },
   "variables": {
-    "baseTemplateUrl": "https://raw.githubusercontent.com/tagliateller/urban-train/master/",
-    "baseTemplatePath": "azure-templates/openshift-origin/",
-    "baseVMachineTemplateUriMaster": "[concat(variables('baseTemplateUrl'), variables('baseTemplatePath'), 'master.json')]",
     "location": "[resourceGroup().location]",
-    "virtualNetworkName": "openshiftVnet",
+    "virtualNetworkName": "ticketmonsterVnet",
     "addressPrefix": "10.0.0.0/16",
-    "mastersubnetName": "masterSubnet",
-    "mastersubnetPrefix": "10.0.0.0/24",
+    "tmsubnetName": "masterSubnet",
+    "tmsubnetPrefix": "10.0.0.0/24",
     "apiVersion": "2015-06-15",
-    "masterStorageName": "[concat(uniqueString(resourceGroup().id), 'mastersa')]",
+    "tmStorageName": "[concat(uniqueString(resourceGroup().id), 'tmsa')]",
     "vhdStorageType": "Standard_LRS",
     "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
-    "masterSubnetRef": "[concat(variables('vnetId'), '/subnets/', variables('mastersubnetName'))]",
+    "tmSubnetRef": "[concat(variables('vnetId'), '/subnets/', variables('tmsubnetName'))]",
     "centos": {
       "publisher": "Openlogic",
       "offer": "CentOS",
@@ -120,7 +243,7 @@
   "resources": [
     {
       "type": "Microsoft.Storage/storageAccounts",
-      "name": "[variables('masterStorageName')]",
+      "name": "[variables('tmStorageName')]",
       "apiVersion": "[variables('apiVersion')]",
       "location": "[variables('location')]",
       "tags": {
@@ -146,21 +269,22 @@
         },
         "subnets": [
           {
-            "name": "[variables('mastersubnetName')]",
+            "name": "[variables('tmsubnetName')]",
             "properties": {
-              "addressPrefix": "[variables('mastersubnetPrefix')]"
+              "addressPrefix": "[variables('tmsubnetPrefix')]"
             }
           }
         ]
       }
     },
     {
-      "name": "master",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2013-03-01",
+      "name": "dev",
+      "type": "Microsoft.Compute/virtualMachines",
+      "apiVersion": "[variables('apiVersion')]",
+      "location": "[variables('location')]",
       "dependsOn": [
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
-        "[concat('Microsoft.Storage/storageAccounts/', variables('masterStorageName'))]"
+        "[concat('Microsoft.Storage/storageAccounts/', variables('tmStorageName'))]"
       ],
       "properties": {
         "mode": "Incremental",
@@ -170,13 +294,13 @@
         },
         "parameters": {
           "vmName": {
-            "value": "master"
+            "value": "dev"
           },
           "dnsName": {
-            "value": "[parameters('masterDNSName')]"
+            "value": "[parameters('devDNSName')]"
           },
           "sa": {
-            "value": "[variables('masterStorageName')]"
+            "value": "[variables('tmStorageName')]"
           },
           "subnetRef": {
             "value": "[variables('masterSubnetRef')]"
