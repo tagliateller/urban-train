@@ -217,6 +217,11 @@
     }    
   },
   "variables": {
+    "baseTemplateUrl": "https://raw.githubusercontent.com/tagliateller/urban-train/master/",
+    "baseTemplatePath": "azure-templates/ticketmonster-classic/",
+    "baseVMachineTemplateUriDev": "[concat(variables('baseTemplateUrl'), variables('baseTemplatePath'), 'dev.json')]",
+    "baseVMachineTemplateUriAppSrv": "[concat(variables('baseTemplateUrl'), variables('baseTemplatePath'), 'appsrv.json')]",
+    "baseVMachineTemplateUriDbSrv": "[concat(variables('baseTemplateUrl'), variables('baseTemplatePath'), 'dbsrv.json')]",
     "location": "[resourceGroup().location]",
     "virtualNetworkName": "ticketmonsterVnet",
     "addressPrefix": "10.0.0.0/16",
@@ -306,6 +311,96 @@
           },
           "vmSize": {
             "value": "[parameters('devVMSize')]"
+          },
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "sshKeyData": {
+            "value": "[parameters('sshKeyData')]"
+          },
+          "baseTemplateUrl": {
+            "value": "[variables('baseTemplateUrl')]"
+          },
+          "imageReference": {
+            "value": "[variables(parameters('image'))]"
+          }
+        }
+      }    
+    },
+    {
+      "name": "appsrv",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2013-03-01",
+      "dependsOn": [
+        "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('tmStorageName'))]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('baseVMachineTemplateUriAppSrv')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vmName": {
+            "value": "appsrv"
+          },
+          "dnsName": {
+            "value": "[parameters('appSrvDNSName')]"
+          },
+          "sa": {
+            "value": "[variables('tmStorageName')]"
+          },
+          "subnetRef": {
+            "value": "[variables('tmSubnetRef')]"
+          },
+          "vmSize": {
+            "value": "[parameters('appSrvVMSize')]"
+          },
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "sshKeyData": {
+            "value": "[parameters('sshKeyData')]"
+          },
+          "baseTemplateUrl": {
+            "value": "[variables('baseTemplateUrl')]"
+          },
+          "imageReference": {
+            "value": "[variables(parameters('image'))]"
+          }
+        }
+      }    
+    }
+    {
+      "name": "dbsrv",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2013-03-01",
+      "dependsOn": [
+        "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('tmStorageName'))]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('baseVMachineTemplateUriDbSrv')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vmName": {
+            "value": "dbsrv"
+          },
+          "dnsName": {
+            "value": "[parameters('dbSrvDNSName')]"
+          },
+          "sa": {
+            "value": "[variables('tmStorageName')]"
+          },
+          "subnetRef": {
+            "value": "[variables('tmSubnetRef')]"
+          },
+          "vmSize": {
+            "value": "[parameters('dbSrvVMSize')]"
           },
           "adminUsername": {
             "value": "[parameters('adminUsername')]"
