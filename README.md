@@ -10,3 +10,6 @@ https://github.com/ansible/ansible-examples/blob/master/jboss-standalone/roles/j
 
 https://github.com/PCextreme/ansible-role-mariadb
 
+## Facts
+
+ansible -i lab-inventory rdo-server.priv.tagliateller.nu -m setup

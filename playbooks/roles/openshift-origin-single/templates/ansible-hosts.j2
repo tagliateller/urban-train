@@ -3,7 +3,7 @@ masters
 nodes
 
 [OSEv3:vars]
-ansible_ssh_user=${USERNAME}
+ansible_ssh_user={{ ansible_user }}
 ansible_sudo=true
 debug_level=2
 deployment_type=origin
@@ -12,10 +12,8 @@ openshift_master_default_subdomain=${ROUTEREXTIP}.xip.io
 openshift_use_dnsmasq=False
 
 [masters]
-master openshift_public_hostname=${HOSTNAME}
+master openshift_public_hostname={{ ${HOSTNAME}
 
 [nodes]
 master
-node[01:${NODECOUNT}] openshift_node_labels="{'region': 'primary', 'zone': 'default'}"
-infranode openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
 
