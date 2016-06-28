@@ -13,16 +13,9 @@
     - httpd-tools
     
 - name: download maven
-  tags: maven
-  include: ../../silpion.lib/tasks/get_url.yml
+  
   vars:
     url: "{{ maven_mirror }}/{{ maven_redis_filename }}"
-    filename: "{{ maven_redis_filename }}"
-
-- name: Upload installation archive
-  tags: maven
-  include: ../../silpion.lib/tasks/copy.yml
-  vars:
     filename: "{{ maven_redis_filename }}"
 
 - name: Install Maven installation directory
