@@ -4,6 +4,7 @@
   become_user: root
   with_items:
     - java7 
+    - git
 
 - name: download maven
   get_url: url=http://apache.openmirror.de/maven/maven-3/{{ maven_version }}/binaries/{{ maven_distr_filename }} dest=/home/{{ ansible_user }}
@@ -32,8 +33,8 @@
   become: true
   file:
     state: directory
-    owner: 0
-    group: 0
+    owner: {{ ansible_user }}
+    group: {{ ansible_group }}
     mode: 0755
     dest: "{{ maven_bin_path }}"
 
@@ -46,3 +47,15 @@
     src: "/home/{{ ansible_user }}/{{ maven_install_dir }}/apache-maven-{{ maven_version }}/bin/mvn"
     dest: "{{ maven_bin_path }}/mvn"
 
+- name: Install workspace directory
+  tags: maven
+  become: true
+  file:
+    state: directory
+    owner: {{ ansible_user }}
+    group: {{ ansible_group }}
+    mode: 0755
+    dest: "{{ workspace_dir }}"
+
+- name: clone repo
+  git: repo=https://github.com/jboss-developer/ticket-monster.git dest="/home/{{ ansible_user}}/workspace"
