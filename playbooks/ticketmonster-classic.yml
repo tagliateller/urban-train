@@ -1,0 +1,8 @@
+---
+
+- name: Install Ticketmonster
+
+  roles:
+    - ticketmonster-dev-station
+    - ticketmonster-appsrv
+    - ticketmonster-dbsrv
