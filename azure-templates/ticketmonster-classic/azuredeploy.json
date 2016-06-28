@@ -279,9 +279,8 @@
     },
     {
       "name": "dev",
-      "type": "Microsoft.Compute/virtualMachines",
-      "apiVersion": "[variables('apiVersion')]",
-      "location": "[variables('location')]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2013-03-01",
       "dependsOn": [
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
         "[concat('Microsoft.Storage/storageAccounts/', variables('tmStorageName'))]"
@@ -289,7 +288,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('baseVMachineTemplateUriMaster')]",
+          "uri": "[variables('baseVMachineTemplateUriDev')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -303,10 +302,10 @@
             "value": "[variables('tmStorageName')]"
           },
           "subnetRef": {
-            "value": "[variables('masterSubnetRef')]"
+            "value": "[variables('tmSubnetRef')]"
           },
           "vmSize": {
-            "value": "[parameters('masterVMSize')]"
+            "value": "[parameters('devVMSize')]"
           },
           "adminUsername": {
             "value": "[parameters('adminUsername')]"
@@ -321,7 +320,7 @@
             "value": "[variables(parameters('image'))]"
           }
         }
-      }
+      }    
     }
   ]
 }
