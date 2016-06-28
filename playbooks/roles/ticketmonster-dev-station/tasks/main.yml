@@ -6,7 +6,7 @@
     - java7 
 
 - name: download maven
-  get_url: url=http://apache.openmirror.de/maven/maven-3/{{ maven_version }}/binaries/apache-maven-{{ maven_version }}-bin.tar.gz dest=/home/{{ ansible_user }}
+  get_url: url=http://apache.openmirror.de/maven/maven-3/{{ maven_version }}/binaries/{{ maven_distr_filename }} dest=/home/{{ ansible_user }}
 
 - name: Install Maven installation directory
   tags: maven
@@ -16,14 +16,14 @@
     owner: {{ ansible_user }}
     group: {{ ansible_group }}
     mode: 0755
-    dest: "{{ maven_install_dir }}"
+    dest: "/home/{{ ansible_user}}/{{ maven_install_dir }}"
 
 - name: Install Maven
   tags: maven
   become: true
   unarchive:
     src: "/home/{{ ansible_user }}/{{ maven_distr_filename }}"
-    dest: "{{ maven_install_dir }}"
+    dest: "/home/{{ ansible_user }}/{{ maven_install_dir }}"
     copy: false
     creates: "{{ maven_install_dir }}/apache-maven-{{ maven_version }}"
 
@@ -43,6 +43,6 @@
   file:
     state: link
     force: true
-    src: "{{ maven_install_dir }}/apache-maven-{{ maven_version }}/bin/mvn"
+    src: "/home/{{ ansible_user }}/{{ maven_install_dir }}/apache-maven-{{ maven_version }}/bin/mvn"
     dest: "{{ maven_bin_path }}/mvn"
 
