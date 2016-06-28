@@ -8,8 +8,14 @@
     "sshKeyData": {
       "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDOlFmrmrt4BGUZUrjCTWUkE9zVNtJfdlbguOgH/G4jNCeVhe/J3w1AU2QIqdAlKdEGQ7oD/7j/e9izCaJVnsVFV3NHkTMmr8mbFw4RRtObz30entEjvscZc8pXIJWEN5Sm0UMXra9k0ULri9Fv0He2TMVCqfP1SloKydmYgaM4305eSfoPxEVkmLxTlwiUMaMBIDqZE6JnV3sxO6tNM7HJMdSEKDBVfjGnlUS6K/9Kp+EVvsC2xeBbLDiMQDHtDn6bis3V8qiHgyvycy6V64+L5RZHjKRC4PRKtUfrDNUZlcro1mm2LuMxD9YD/6ZJvOzIap/vTNdb971O1U43maJL robert.bloy@itdz-berlin.de"
     },
-    "masterDnsName": {
-      "value": "origin-master"
+    "devDnsName": {
+      "value": "tm-dev"
+    },
+    "appSrvDnsName": {
+      "value": "tm-appsrv"
+    },
+    "dbSrvDnsName": {
+      "value": "tm-dbsrv"
     },
     "image": {
       "value": "centos"
