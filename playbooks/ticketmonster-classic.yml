@@ -12,5 +12,9 @@
 
 - name: Install DB
   hosts: dbsrv
+
+  vars_files:
+    - secrets.yml
+
   roles:
     - ticketmonster-dbsrv
