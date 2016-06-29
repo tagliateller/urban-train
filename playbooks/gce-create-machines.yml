@@ -1,0 +1,64 @@
+---
+
+- name: Create instance(s)
+  hosts: localhost
+  gather_facts: yes
+  connection: local
+
+  vars:
+    machine_type: n1-standard-1 # 4 core, 15GB RAM
+    image: centos-7
+    service_account_email: ansible@bubbly-hope-132123.iam.gserviceaccount.com 
+    credentials_file: /home/{{ ansible_user_id }}/.gce-credentials
+    project_id: bubbly-hope-132123
+
+  tasks:
+
+#    - name: Launch instances
+#      gce:
+#          instance_names: dev-machine
+#          machine_type: "{{ machine_type }}"
+#          image: "{{ image }}"
+#          service_account_email: "{{ service_account_email }}"
+#          credentials_file: "{{ credentials_file }}"
+#          project_id: "{{ project_id }}"
+#          tags: devmachine
+#      register: gce
+
+#    - name: Launch instances
+#      gce:
+#          instance_names: appsrv-machine
+#          machine_type: "{{ machine_type }}"
+#          image: "{{ image }}"
+#          service_account_email: "{{ service_account_email }}"
+#          credentials_file: "{{ credentials_file }}"
+#          project_id: "{{ project_id }}"
+#          tags: appserver
+#      register: gce
+
+    - name: Launch instances
+      gce:
+          instance_names: dbsrv-machine
+          machine_type: "{{ machine_type }}"
+          image: "{{ image }}"
+          service_account_email: "{{ service_account_email }}"
+          credentials_file: "{{ credentials_file }}"
+          project_id: "{{ project_id }}"
+          tags: dbserver
+      register: gce
+
+#    - name: Wait for SSH to come up
+#      wait_for: host={{ item.public_ip }} port=22 delay=10 timeout=60
+#      with_items: gce.instance_data
+
+#    - name: Add host to groupname
+#      add_host: hostname={{ item.public_ip }} groupname=new_instances
+#      with_items: gce.instance_data
+
+#- name: Manage new instances
+#  hosts: new_instances
+#  connection: ssh
+#  sudo: True
+#  roles:
+#    - base_configuration
+#    - production_server
