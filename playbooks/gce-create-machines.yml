@@ -6,7 +6,8 @@
   connection: local
 
   vars:
-    machine_type: n1-standard-1 # 4 core, 15GB RAM
+    machine_type_small: n1-standard-1 # 1 core, 4GB RAM
+    machine_type_large: n1-standard-4 # 4 core, 15GB RAM
     image: centos-7
     service_account_email: ansible@bubbly-hope-132123.iam.gserviceaccount.com 
     credentials_file: /home/{{ ansible_user_id }}/.gce-credentials
@@ -14,32 +15,43 @@
 
   tasks:
 
-#    - name: Launch instances
-#      gce:
-#          instance_names: dev-machine
-#          machine_type: "{{ machine_type }}"
-#          image: "{{ image }}"
-#          service_account_email: "{{ service_account_email }}"
-#          credentials_file: "{{ credentials_file }}"
-#          project_id: "{{ project_id }}"
-#          tags: devmachine
-#      register: gce
+    - name: Launch instances
+      gce:
+          instance_names: origin-machine
+          machine_type: "{{ machine_type_large }}"
+          image: "{{ image }}"
+          service_account_email: "{{ service_account_email }}"
+          credentials_file: "{{ credentials_file }}"
+          project_id: "{{ project_id }}"
+          tags: origin
+      register: gce
 
-#    - name: Launch instances
-#      gce:
-#          instance_names: appsrv-machine
-#          machine_type: "{{ machine_type }}"
-#          image: "{{ image }}"
-#          service_account_email: "{{ service_account_email }}"
-#          credentials_file: "{{ credentials_file }}"
-#          project_id: "{{ project_id }}"
-#          tags: appserver
-#      register: gce
+    - name: Launch instances
+      gce:
+          instance_names: dev-machine
+          machine_type: "{{ machine_type_small }}"
+          image: "{{ image }}"
+          service_account_email: "{{ service_account_email }}"
+          credentials_file: "{{ credentials_file }}"
+          project_id: "{{ project_id }}"
+          tags: devmachine
+      register: gce
+
+    - name: Launch instances
+      gce:
+          instance_names: appsrv-machine
+          machine_type: "{{ machine_type_small }}"
+          image: "{{ image }}"
+          service_account_email: "{{ service_account_email }}"
+          credentials_file: "{{ credentials_file }}"
+          project_id: "{{ project_id }}"
+          tags: appserver
+      register: gce
 
     - name: Launch instances
       gce:
           instance_names: dbsrv-machine
-          machine_type: "{{ machine_type }}"
+          machine_type: "{{ machine_type_small }}"
           image: "{{ image }}"
           service_account_email: "{{ service_account_email }}"
           credentials_file: "{{ credentials_file }}"

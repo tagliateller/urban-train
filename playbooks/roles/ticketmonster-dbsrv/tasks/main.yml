@@ -17,7 +17,7 @@
   yum: name=MySQL-python state=present
   become: True
   become_user: root
-  when: mysql_secure_installation and mysql_root_password is defined
+#  when: mysql_secure_installation and mysql_root_password is defined
 
 - name: Add configuration
   template: src={{ mysql_conf_tpl }} dest={{ mysql_conf_dir }}/{{ mysql_conf_file }} owner=root group=root mode=0644
@@ -31,3 +31,8 @@
   become_user: root
   service: name=mysql state=started enabled=yes
 
+- name: Anlage einer Datenbank für Ticketmonster
+  mysql_db: name=ticketmonster state=present login_user=root login_password={{ mysql_root_password }}
+
+- name: Anlage Nutzer 
+  mysql_user: name=ticketmonster password=ticketmonster priv=*.* state=present login_user=root login_password={{ mysql_root_password }}

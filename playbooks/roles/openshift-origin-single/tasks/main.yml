@@ -22,23 +22,23 @@
   become: yes
   become_user: root
 
-- name: install packages
-  yum: name={{ item }} enablerepo=epel state=installed
-  become: yes
-  become_user: root
-  with_items:
-    - ansible1.9
-    - pyOpenSSL
+#- name: install packages
+#  yum: name={{ item }} enablerepo=epel state=installed
+#  become: yes
+#  become_user: root
+#  with_items:
+#    - ansible1.9
+#    - pyOpenSSL
 
-- name: test if repo exists
-  stat: path=/opt/openshift-ansible
-  register: openshift_ansible
+#- name: test if repo exists
+#  stat: path=/opt/openshift-ansible
+#  register: openshift_ansible
 
-- name: clone git repo
-  command: git clone https://github.com/openshift/openshift-ansible /opt/openshift-ansible
-  become: yes
-  become_user: root
-  when: openshift_ansible.stat.exists == False
+#- name: clone git repo
+#  command: git clone https://github.com/openshift/openshift-ansible /opt/openshift-ansible
+#  become: yes
+#  become_user: root
+#  when: openshift_ansible.stat.exists == False
   
 - name: install docker
   yum: name=docker state=installed
@@ -55,10 +55,10 @@
   become: yes
   become_user: root
 
-- name: ansible hosts setzen
-  template: src=ansible-hosts.j2 dest=/etc/ansible/hosts                                                                            
-  become: yes
-  become_user: root
+#- name: ansible hosts setzen
+#  template: src=ansible-hosts.j2 dest=/etc/ansible/hosts                                                                            
+#  become: yes
+#  become_user: root
 
 - name: create dir for htpasswd
   file: path=/etc/origin/master state=directory
@@ -70,7 +70,7 @@
   become: yes
   become_user: root
 
-- name: setup install script
-  template: src=openshift-install.sh.j2 dest=/home/{{ ansible_user }}/openshift-install.sh mode=755
-  become: yes
-  become_user: root
+#- name: setup install script
+#  template: src=openshift-install.sh.j2 dest=/home/{{ ansible_user }}/openshift-install.sh mode=755
+#  become: yes
+#  become_user: root

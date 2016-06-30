@@ -10,11 +10,11 @@
     
     - role: openshift-origin-single
     
-    - role: openshift-auth-htaccess
+#    - role: openshift-auth-htaccess
 
-    - role: openshift-docker-registry-internal
+#    - role: openshift-docker-registry-internal
 
-    - role: openshift-default-router
+#    - role: openshift-default-router
 
-    - role: ticketmonster-install
+#    - role: ticketmonster-install
     
