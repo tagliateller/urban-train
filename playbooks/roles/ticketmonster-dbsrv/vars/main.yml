@@ -2,3 +2,4 @@ mariadb_version: 10.0
 mysql_conf_dir: /etc/my.cnf.d
 mysql_conf_file: my.cnf
 mysql_conf_tpl: my.cnf.j2
+mysql_secure_installation: True
