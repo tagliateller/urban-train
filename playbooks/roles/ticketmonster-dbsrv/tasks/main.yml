@@ -81,4 +81,4 @@
   mysql_db: name=ticketmonster state=present login_user=root login_password={{ mysql_root_password }}
 
 - name: Anlage Nutzer 
-  mysql_user: name=ticketmonster password=ticketmonster priv=*.* state=present login_user=root login_password={{ mysql_root_password }}
+  mysql_user: name=ticketmonster password=ticketmonster priv=*.*:ALL state=present login_user=root login_password={{ mysql_root_password }}

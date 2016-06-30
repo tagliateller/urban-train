@@ -94,7 +94,7 @@
             <datasources>
 
                 <datasource jndi-name="java:jboss/datasources/MariaDBDS" pool-name="MariaDBDS" enabled="true" use-java-context="true">
-                    <connection-url>jdbc:mariadb://{{ dbsrv }}:3306/ticketmonsterdb</connection-url>
+                    <connection-url>jdbc:mariadb://104.197.87.145:3306/ticketmonsterdb</connection-url>
                     <driver>mariadb</driver>
                     <security>
                         <user-name>ticketmonster</user-name>

@@ -25,6 +25,24 @@ PLAY RECAP ********************************************************************
 localhost                  : ok=13   changed=0    unreachable=0    failed=0   
 master.tagliateller.nu     : ok=216  changed=8    unreachable=1    failed=0   
 
+## akt. Stand 30.06.2016 openshift-ansible-3.2.8-1
+
+PLAY [Deploy node certificates] ************************************************
+
+TASK [setup] *******************************************************************
+ok: [master.tagliateller.nu]
+
+TASK [Ensure certificate directory exists] *************************************
+ok: [master.tagliateller.nu]
+
+TASK [Unarchive the tarball on the node] ***************************************
+fatal: [master.tagliateller.nu]: FAILED! => {"changed": false, "failed": true, "msg": "path /etc/origin/node/./system:node:origin-machine.c.bubbly-hope-132123.internal.crt does not exist", "path": "/etc/origin/node/./system:node:origin-machine.c.bubbly-hope-132123.internal.crt", "state": "absent"}
+
+NO MORE HOSTS LEFT *************************************************************
+	to retry, use: --limit @playbooks/byo/config.retry
+
+erste Feststellung: Path ist vorhanden, aber leer ...
+
 ## Monitoring
 
 TODO

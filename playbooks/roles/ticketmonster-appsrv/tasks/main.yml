@@ -1,10 +1,17 @@
 ---
+
+# 
+# TODO: ermittlung der dbsrv-adresse automatisch
+# entweder aus dem inventory oder per gcloud mit dem Tag
+#
+
 - name: Install Java 1.7 and some basic dependencies
   yum: name={{item}} state=present
   become: yes
   become_user: root
   with_items:
    - java-1.7.0-openjdk
+   - unzip
 
 - name: Download JBoss from jboss.org
   get_url: url=http://download.jboss.org/jbossas/7.1/jboss-as-7.1.1.Final/jboss-as-7.1.1.Final.zip dest=/opt/jboss-as-7.1.1.Final.zip
@@ -51,5 +58,10 @@
 
 - name: Enable JBoss to be started at boot
   service: name=jboss enabled=yes state=started 
+  become: yes
+  become_user: root
+
+- name: add remote user
+  command: chdir=/usr/share/jboss-as bin/add-user.sh john remote
   become: yes
   become_user: root

@@ -26,16 +26,16 @@
 #          tags: origin
 #      register: gce
 
-#    - name: Launch instances
-#      gce:
-#          instance_names: dev-machine
-#          machine_type: "{{ machine_type_small }}"
-#          image: "{{ image }}"
-#          service_account_email: "{{ service_account_email }}"
-#          credentials_file: "{{ credentials_file }}"
-#          project_id: "{{ project_id }}"
-#          tags: devmachine
-#      register: gce
+    - name: Launch instances
+      gce:
+          instance_names: dev-machine
+          machine_type: "{{ machine_type_small }}"
+          image: "{{ image }}"
+          service_account_email: "{{ service_account_email }}"
+          credentials_file: "{{ credentials_file }}"
+          project_id: "{{ project_id }}"
+          tags: devmachine
+      register: gce
 
 #    - name: Launch instances
 #      gce:
@@ -48,16 +48,16 @@
 #          tags: appserver
 #      register: gce
 
-    - name: Launch instances
-      gce:
-          instance_names: dbsrv-machine
-          machine_type: "{{ machine_type_small }}"
-          image: "{{ image }}"
-          service_account_email: "{{ service_account_email }}"
-          credentials_file: "{{ credentials_file }}"
-          project_id: "{{ project_id }}"
-          tags: dbserver
-      register: gce
+#    - name: Launch instances
+#      gce:
+#          instance_names: dbsrv-machine
+#          machine_type: "{{ machine_type_small }}"
+#          image: "{{ image }}"
+#          service_account_email: "{{ service_account_email }}"
+#          credentials_file: "{{ credentials_file }}"
+#          project_id: "{{ project_id }}"
+#          tags: dbserver
+#      register: gce
 
 #    - name: Wait for SSH to come up
 #      wait_for: host={{ item.public_ip }} port=22 delay=10 timeout=60

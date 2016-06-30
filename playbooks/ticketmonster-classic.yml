@@ -1,10 +1,5 @@
 ---
 
-#- name: Install Ticketmonster
-#  hosts: dev
-#  roles:
-#    - ticketmonster-dev-station
-
 - name: Install DB
   hosts: dbsrv
 
@@ -19,3 +14,7 @@
   roles:
     - ticketmonster-appsrv
 
+- name: Install Ticketmonster
+  hosts: dev
+  roles:
+    - ticketmonster-dev-station
