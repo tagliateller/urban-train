@@ -15,38 +15,38 @@
 
   tasks:
 
-    - name: Launch instances
-      gce:
-          instance_names: origin-machine
-          machine_type: "{{ machine_type_large }}"
-          image: "{{ image }}"
-          service_account_email: "{{ service_account_email }}"
-          credentials_file: "{{ credentials_file }}"
-          project_id: "{{ project_id }}"
-          tags: origin
-      register: gce
+#    - name: Launch instances
+#      gce:
+#          instance_names: origin-machine
+#          machine_type: "{{ machine_type_large }}"
+#          image: "{{ image }}"
+#          service_account_email: "{{ service_account_email }}"
+#          credentials_file: "{{ credentials_file }}"
+#          project_id: "{{ project_id }}"
+#          tags: origin
+#      register: gce
 
-    - name: Launch instances
-      gce:
-          instance_names: dev-machine
-          machine_type: "{{ machine_type_small }}"
-          image: "{{ image }}"
-          service_account_email: "{{ service_account_email }}"
-          credentials_file: "{{ credentials_file }}"
-          project_id: "{{ project_id }}"
-          tags: devmachine
-      register: gce
+#    - name: Launch instances
+#      gce:
+#          instance_names: dev-machine
+#          machine_type: "{{ machine_type_small }}"
+#          image: "{{ image }}"
+#          service_account_email: "{{ service_account_email }}"
+#          credentials_file: "{{ credentials_file }}"
+#          project_id: "{{ project_id }}"
+#          tags: devmachine
+#      register: gce
 
-    - name: Launch instances
-      gce:
-          instance_names: appsrv-machine
-          machine_type: "{{ machine_type_small }}"
-          image: "{{ image }}"
-          service_account_email: "{{ service_account_email }}"
-          credentials_file: "{{ credentials_file }}"
-          project_id: "{{ project_id }}"
-          tags: appserver
-      register: gce
+#    - name: Launch instances
+#      gce:
+#          instance_names: appsrv-machine
+#          machine_type: "{{ machine_type_small }}"
+#          image: "{{ image }}"
+#          service_account_email: "{{ service_account_email }}"
+#          credentials_file: "{{ credentials_file }}"
+#          project_id: "{{ project_id }}"
+#          tags: appserver
+#      register: gce
 
     - name: Launch instances
       gce:
