@@ -90,5 +90,9 @@ https://github.com/jhinrichsen/ansible-nexus.git
 
 https://github.com/2015-Middleware-Keynote/demo-ansible/blob/master/run.py
 
+## AWS
+
+cluster.py prüfen, ggf. werden keine openshift-variablen gesetzt ? Sonst auch DEBUG in 
+
 
 
