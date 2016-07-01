@@ -74,3 +74,16 @@ ansible -i lab-inventory rdo-server.priv.tagliateller.nu -m setup
 
 https://github.com/sfromm/ansible-omdistro.git
 
+##Jenkins 
+
+https://github.com/geerlingguy/ansible-role-jenkins.git
+
+## Gitlab
+
+https://github.com/geerlingguy/ansible-role-gitlab.git
+
+## Nexus
+
+https://github.com/jhinrichsen/ansible-nexus.git
+
+
