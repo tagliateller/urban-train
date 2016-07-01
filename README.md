@@ -69,3 +69,8 @@ https://github.com/PCextreme/ansible-role-mariadb
 ## Facts
 
 ansible -i lab-inventory rdo-server.priv.tagliateller.nu -m setup
+
+## OMD
+
+https://github.com/sfromm/ansible-omdistro.git
+
