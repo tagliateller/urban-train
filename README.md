@@ -86,4 +86,9 @@ https://github.com/geerlingguy/ansible-role-gitlab.git
 
 https://github.com/jhinrichsen/ansible-nexus.git
 
+## Sonstiges
+
+https://github.com/2015-Middleware-Keynote/demo-ansible/blob/master/run.py
+
+
 
