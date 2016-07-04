@@ -328,6 +328,19 @@ localhost                  : ok=9    changed=7    unreachable=0    failed=0
 ACTION [update] failed: Command 'ansible-playbook  -i inventory/aws/hosts -e 'cluster_id=origin-v3 cluster_env=dev deployment_type=origin' playbooks/aws/openshift-cluster/update.yml' returned non-zero exit status 2
 [vagrant@localhost openshift-ansible]$
 
+## GCE
+
+export GCE_INI_PATH=/home/vagrant/.gce/gce.ini
+
+## AWS
+
+[vagrant@localhost openshift-ansible]$ source ~/.aws_config
+[vagrant@localhost openshift-ansible]$ source ~/.aws_credentials
+[vagrant@localhost openshift-ansible]$ eval `ssh-agent`
+Agent pid 3822
+[vagrant@localhost openshift-ansible]$ ssh-add ~/.ssh/id_rsa
+Identity added: /home/vagrant/.ssh/id_rsa (/home/vagrant/.ssh/id_rsa)
+[vagrant@localhost openshift-ansible]$
 
 ## Monitoring
 
