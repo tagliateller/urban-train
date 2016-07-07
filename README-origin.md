@@ -49,6 +49,12 @@ oadm registry --selector=type=infra
 
 Beachte: git-branch 2.7.0.Final, directory /demo
 
+Fehler bei docker push --> falsche IP ?? ggf. Problem beim AUfsetzen des CLusters bzw. falschem Aufsetzen der Registry ?
+
+## Login in interne Registry
+
+--> geht noch nicht lt. https://docs.openshift.org/latest/dev_guide/managing_images.html#accessing-the-internal-registry
+
 
 
 
