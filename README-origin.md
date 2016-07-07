@@ -32,5 +32,17 @@ sudo systemctl status origin-master.service
 
 --> OK
 
+## Test
+
+oc get nodes
+oadm diagnostics
+
+--> OK mit Fehler: Kein Zugriff auf master-config.yaml ??
+
+## Install Registry
+
+oadm registry --selector=type=infra
+
+--> OK
 
 
