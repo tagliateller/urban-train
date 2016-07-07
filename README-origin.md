@@ -47,6 +47,11 @@ oadm registry --selector=type=infra
 
 ## Install Ticketmonster
 
+Beachte: git-branch 2.7.0.Final, directory /demo
+
+
+
+
 
 
 
