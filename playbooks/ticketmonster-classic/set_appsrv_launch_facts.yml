@@ -1,0 +1,12 @@
+---
+- set_fact: instance_type="appsrv"
+
+- name: Generate appsrv instance names(s)
+  set_fact:
+    scratch_name: "{{ cluster_id }}-{{ instance_type }}-{{ '%05x' | format(1048576 | random) }}"
+  register: appsrv_names_output
+  with_sequence: count={{ num_appsrvs }}
+
+- set_fact:
+    appsrv_names: "{{ appsrv_names_output.results | default([]) }}"
+

@@ -1,0 +1,15 @@
+cluster_id: tm1
+
+num_dbsrvs: 1
+num_appsrvs: 0
+num_devclts: 0
+num_jmeterclts: 0
+num_checkmksrvs: 0
+
+deployment_vars:
+  default:
+    image: "centos-7"
+    machine_type: "n1-standard-1"
+    ssh_user: "{{ lookup('env', 'gce_ssh_user') |  default(ansible_ssh_user, true) }}"
+    become: yes
+

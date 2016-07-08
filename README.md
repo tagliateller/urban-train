@@ -330,7 +330,11 @@ ACTION [update] failed: Command 'ansible-playbook  -i inventory/aws/hosts -e 'cl
 
 ## GCE
 
-export GCE_INI_PATH=/home/vagrant/.gce/gce.ini
+source ~/.gce/gce_credentials
+source ~/.gce/gce_config
+ansible-playbook playbooks/gce/ticketmonster-classic-launch.yml -u cloud-user
+
+Bildung des Namens noch nicht vollständig - Name steht in Scratch drin, aber nicht als Ergebnis
 
 ## AWS
 

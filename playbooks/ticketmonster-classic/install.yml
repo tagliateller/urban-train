@@ -1,0 +1,35 @@
+---
+
+- name: Install DB
+  hosts: dbsrvs
+
+  vars_files:
+    - secrets.yml
+
+  roles:
+    - { role: ticketmonster-dbsrv, when: num_dbsrvs > 0 } 
+
+- name: Install JBoss
+  hosts: appsrvs
+
+  roles:
+    - { role: ticketmonster-appsrv, when: num_appsrvs > 0 }
+
+- name: Install Ticketmonster
+  hosts: devclts
+
+  roles:
+    - { role: ticketmonster-devclt, when: num_devclts > 0 }
+
+- name: Install JMeter Client
+  hosts: jmeterclts
+
+  roles:
+    - { role: ticketmonster-jmeterclt, when: num_jmeterclts > 0 }
+
+- name: Install CheckMK Server
+  hosts: checkmksrvs
+
+  roles:
+    - { role: ticketmonster-checkmksrv, when: num_checkmksrvs > 0 }
+

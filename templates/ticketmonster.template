@@ -1,0 +1,461 @@
+apiVersion: v1
+kind: Template
+metadata:
+  creationTimestamp: null
+  name: ticketmonster
+objects:
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: null
+    labels:
+      app: tm-1
+    name: tm-1
+  spec:
+    output:
+      to:
+        kind: ImageStreamTag
+        name: tm-1:latest
+    postCommit: {}
+    resources: {}
+    source:
+      contextDir: /demo
+      git:
+        ref: 2.7.0.Final
+        uri: https://github.com/jboss-developer/ticket-monster.git
+      secrets: null
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: wildfly:10.0
+          namespace: openshift
+      type: Source
+    triggers:
+    - generic:
+        secret: dc9e891ce3efe7f4
+      type: Generic
+    - github:
+        secret: 3a3a0039f46d1e85
+      type: GitHub
+    - imageChange: {}
+      type: ImageChange
+    - type: ConfigChange
+  status:
+    lastVersion: 0
+- apiVersion: v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: tm-1-1-build
+    creationTimestamp: null
+    labels:
+      app: tm-1
+      buildconfig: tm-1
+      openshift.io/build-config.name: tm-1
+    name: tm-1-1
+  spec:
+    output:
+      pushSecret:
+        name: builder-dockercfg-n41wv
+      to:
+        kind: ImageStreamTag
+        name: tm-1:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: Vineet.Reynolds@gmail.com
+          name: Vineet Reynolds
+        commit: 0af92c4982ec656ec684ab9fba4ae984970f3f87
+        committer:
+          email: Vineet.Reynolds@gmail.com
+          name: Vineet Reynolds
+        message: Prepare for 2.7.0.Final release
+      type: Git
+    serviceAccount: builder
+    source:
+      contextDir: /demo
+      git:
+        ref: 2.7.0.Final
+        uri: https://github.com/jboss-developer/ticket-monster.git
+      secrets: null
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: openshift/wildfly-100-centos7@sha256:4082f3865ca230aec9339d74cdd8097d320f923b94e8593bf3c29f72a7ed4466
+      type: Source
+  status:
+    config:
+      name: tm-1
+    outputDockerImageReference: 172.30.199.110:5000/tm/tm-1:latest
+    phase: New
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: null
+    generation: 1
+    labels:
+      app: tm-1
+    name: tm-1
+  spec:
+    tags:
+    - annotations: null
+      from:
+        kind: DockerImage
+        name: 172.30.199.110:5000/tm/tm-1:latest
+      generation: null
+      importPolicy: {}
+      name: latest
+  status:
+    dockerImageRepository: ""
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: null
+    labels:
+      app: tm-1
+    name: tm-1
+  spec:
+    replicas: 1
+    selector:
+      deploymentconfig: tm-1
+    strategy:
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: tm-1
+          deploymentconfig: tm-1
+      spec:
+        containers:
+        - env:
+          - name: PATH
+            value: /opt/app-root/src/bin:/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+          - name: STI_SCRIPTS_URL
+            value: image:///usr/libexec/s2i
+          - name: STI_SCRIPTS_PATH
+            value: /usr/libexec/s2i
+          - name: HOME
+            value: /opt/app-root/src
+          - name: BASH_ENV
+            value: /opt/app-root/etc/scl_enable
+          - name: ENV
+            value: /opt/app-root/etc/scl_enable
+          - name: PROMPT_COMMAND
+            value: . /opt/app-root/etc/scl_enable
+          - name: WILDFLY_VERSION
+            value: 10.0.0.Final
+          - name: MAVEN_VERSION
+            value: 3.3.9
+          image: 172.30.199.110:5000/tm/tm-1@sha256:23d15374fac6688d2a1d29ff2487f917969ad74abae7d041da57ea4714ddb22d
+          imagePullPolicy: Always
+          name: tm-1
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - tm-1
+        from:
+          kind: ImageStreamTag
+          name: tm-1:latest
+      type: ImageChange
+    - type: ConfigChange
+  status: {}
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.name: tm-1-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: tm-1
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "1"
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"v1","metadata":{"name":"tm-1","namespace":"tm","selfLink":"/oapi/v1/namespaces/tm/deploymentconfigs/tm-1","uid":"de0885fa-4547-11e6-8467-42010a840002","resourceVersion":"4281","creationTimestamp":"2016-07-08T20:09:25Z","labels":{"app":"tm-1"},"annotations":{"openshift.io/generated-by":"OpenShiftWebConsole"}},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{}},"triggers":[{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["tm-1"],"from":{"kind":"ImageStreamTag","name":"tm-1:latest"},"lastTriggeredImage":"172.30.199.110:5000/tm/tm-1@sha256:23d15374fac6688d2a1d29ff2487f917969ad74abae7d041da57ea4714ddb22d"}},{"type":"ConfigChange"}],"replicas":1,"test":false,"selector":{"deploymentconfig":"tm-1"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"tm-1","deploymentconfig":"tm-1"}},"spec":{"containers":[{"name":"tm-1","image":"172.30.199.110:5000/tm/tm-1@sha256:23d15374fac6688d2a1d29ff2487f917969ad74abae7d041da57ea4714ddb22d","ports":[{"containerPort":8080,"protocol":"TCP"}],"env":[{"name":"PATH","value":"/opt/app-root/src/bin:/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"},{"name":"STI_SCRIPTS_URL","value":"image:///usr/libexec/s2i"},{"name":"STI_SCRIPTS_PATH","value":"/usr/libexec/s2i"},{"name":"HOME","value":"/opt/app-root/src"},{"name":"BASH_ENV","value":"/opt/app-root/etc/scl_enable"},{"name":"ENV","value":"/opt/app-root/etc/scl_enable"},{"name":"PROMPT_COMMAND","value":". /opt/app-root/etc/scl_enable"},{"name":"WILDFLY_VERSION","value":"10.0.0.Final"},{"name":"MAVEN_VERSION","value":"3.3.9"}],"resources":{},"terminationMessagePath":"/dev/termination-log","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{}}}},"status":{"latestVersion":1,"details":{"causes":[{"type":"ImageChange","imageTrigger":{"from":{"kind":"ImageStreamTag","name":"tm-1:latest"}}}]}}}
+    creationTimestamp: null
+    generation: 1
+    labels:
+      app: tm-1
+      openshift.io/deployment-config.name: tm-1
+    name: tm-1-1
+  spec:
+    replicas: 1
+    selector:
+      deployment: tm-1-1
+      deploymentconfig: tm-1
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: tm-1
+          openshift.io/deployment.name: tm-1-1
+        creationTimestamp: null
+        labels:
+          app: tm-1
+          deployment: tm-1-1
+          deploymentconfig: tm-1
+      spec:
+        containers:
+        - env:
+          - name: PATH
+            value: /opt/app-root/src/bin:/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+          - name: STI_SCRIPTS_URL
+            value: image:///usr/libexec/s2i
+          - name: STI_SCRIPTS_PATH
+            value: /usr/libexec/s2i
+          - name: HOME
+            value: /opt/app-root/src
+          - name: BASH_ENV
+            value: /opt/app-root/etc/scl_enable
+          - name: ENV
+            value: /opt/app-root/etc/scl_enable
+          - name: PROMPT_COMMAND
+            value: . /opt/app-root/etc/scl_enable
+          - name: WILDFLY_VERSION
+            value: 10.0.0.Final
+          - name: MAVEN_VERSION
+            value: 3.3.9
+          image: 172.30.199.110:5000/tm/tm-1@sha256:23d15374fac6688d2a1d29ff2487f917969ad74abae7d041da57ea4714ddb22d
+          imagePullPolicy: Always
+          name: tm-1
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    replicas: 0
+- apiVersion: v1
+  kind: Route
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/host.generated: "true"
+    creationTimestamp: null
+    labels:
+      app: tm-1
+    name: tm-1
+  spec:
+    host: tm-1-tm.router.default.svc.cluster.local
+    port:
+      targetPort: 8080-tcp
+    to:
+      kind: Service
+      name: tm-1
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: 2016-07-08T20:09:25Z
+        status: "True"
+        type: Admitted
+      host: tm-1-tm.router.default.svc.cluster.local
+      routerName: router
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+    creationTimestamp: null
+    labels:
+      app: tm-1
+    name: tm-1
+  spec:
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      deploymentconfig: tm-1
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      kubernetes.io/created-by: |
+        {"kind":"SerializedReference","apiVersion":"v1","reference":{"kind":"ReplicationController","namespace":"tm","name":"tm-1-1","uid":"66fc20d9-4548-11e6-8467-42010a840002","apiVersion":"v1","resourceVersion":"4299"}}
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: tm-1
+      openshift.io/deployment.name: tm-1-1
+      openshift.io/scc: restricted
+    creationTimestamp: null
+    generateName: tm-1-1-
+    labels:
+      app: tm-1
+      deployment: tm-1-1
+      deploymentconfig: tm-1
+  spec:
+    containers:
+    - env:
+      - name: PATH
+        value: /opt/app-root/src/bin:/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      - name: STI_SCRIPTS_URL
+        value: image:///usr/libexec/s2i
+      - name: STI_SCRIPTS_PATH
+        value: /usr/libexec/s2i
+      - name: HOME
+        value: /opt/app-root/src
+      - name: BASH_ENV
+        value: /opt/app-root/etc/scl_enable
+      - name: ENV
+        value: /opt/app-root/etc/scl_enable
+      - name: PROMPT_COMMAND
+        value: . /opt/app-root/etc/scl_enable
+      - name: WILDFLY_VERSION
+        value: 10.0.0.Final
+      - name: MAVEN_VERSION
+        value: 3.3.9
+      image: 172.30.199.110:5000/tm/tm-1@sha256:23d15374fac6688d2a1d29ff2487f917969ad74abae7d041da57ea4714ddb22d
+      imagePullPolicy: Always
+      name: tm-1
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+          - SYS_CHROOT
+        privileged: false
+        runAsUser: 1000060000
+        seLinuxOptions:
+          level: s0:c8,c2
+      terminationMessagePath: /dev/termination-log
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-x9j0m
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    host: 10.132.0.4
+    imagePullSecrets:
+    - name: default-dockercfg-ob719
+    nodeName: 10.132.0.4
+    restartPolicy: Always
+    securityContext:
+      fsGroup: 1000060000
+      seLinuxOptions:
+        level: s0:c8,c2
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    volumes:
+    - name: default-token-x9j0m
+      secret:
+        secretName: default-token-x9j0m
+  status:
+    phase: Pending
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      openshift.io/build.name: tm-1-1
+      openshift.io/scc: privileged
+    creationTimestamp: null
+    labels:
+      openshift.io/build.name: tm-1-1
+    name: tm-1-1-build
+  spec:
+    containers:
+    - args:
+      - --loglevel=2
+      env:
+      - name: BUILD
+        value: |
+          {"kind":"Build","apiVersion":"v1","metadata":{"name":"tm-1-1","namespace":"tm","selfLink":"/oapi/v1/namespaces/tm/builds/tm-1-1","uid":"de1f033c-4547-11e6-8467-42010a840002","resourceVersion":"4198","creationTimestamp":"2016-07-08T20:09:25Z","labels":{"app":"tm-1","buildconfig":"tm-1","openshift.io/build-config.name":"tm-1"},"annotations":{"openshift.io/build.number":"1"}},"spec":{"serviceAccount":"builder","source":{"type":"Git","git":{"uri":"https://github.com/jboss-developer/ticket-monster.git","ref":"2.7.0.Final"},"contextDir":"/demo","secrets":null},"strategy":{"type":"Source","sourceStrategy":{"from":{"kind":"DockerImage","name":"openshift/wildfly-100-centos7@sha256:4082f3865ca230aec9339d74cdd8097d320f923b94e8593bf3c29f72a7ed4466"}}},"output":{"to":{"kind":"DockerImage","name":"172.30.199.110:5000/tm/tm-1:latest"},"pushSecret":{"name":"builder-dockercfg-n41wv"}},"resources":{},"postCommit":{}},"status":{"phase":"New","outputDockerImageReference":"172.30.199.110:5000/tm/tm-1:latest","config":{"kind":"BuildConfig","namespace":"tm","name":"tm-1"}}}
+      - name: BUILD_LOGLEVEL
+        value: "2"
+      - name: SOURCE_REPOSITORY
+        value: https://github.com/jboss-developer/ticket-monster.git
+      - name: SOURCE_URI
+        value: https://github.com/jboss-developer/ticket-monster.git
+      - name: SOURCE_CONTEXT_DIR
+        value: /demo
+      - name: SOURCE_REF
+        value: 2.7.0.Final
+      - name: ORIGIN_VERSION
+        value: v1.2.0
+      - name: ALLOWED_UIDS
+        value: 1-
+      - name: DROP_CAPS
+        value: KILL,MKNOD,SETGID,SETUID,SYS_CHROOT
+      - name: PUSH_DOCKERCFG_PATH
+        value: /var/run/secrets/openshift.io/push
+      image: openshift/origin-sti-builder:v1.2.0
+      imagePullPolicy: IfNotPresent
+      name: sti-build
+      resources: {}
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      volumeMounts:
+      - mountPath: /var/run/docker.sock
+        name: docker-socket
+      - mountPath: /var/run/secrets/openshift.io/push
+        name: builder-dockercfg-n41wv-push
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: builder-token-050ke
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    host: 10.132.0.4
+    imagePullSecrets:
+    - name: builder-dockercfg-n41wv
+    nodeName: 10.132.0.4
+    restartPolicy: Never
+    securityContext: {}
+    serviceAccount: builder
+    serviceAccountName: builder
+    terminationGracePeriodSeconds: 30
+    volumes:
+    - hostPath:
+        path: /var/run/docker.sock
+      name: docker-socket
+    - name: builder-dockercfg-n41wv-push
+      secret:
+        secretName: builder-dockercfg-n41wv
+    - name: builder-token-050ke
+      secret:
+        secretName: builder-token-050ke
+  status:
+    phase: Pending

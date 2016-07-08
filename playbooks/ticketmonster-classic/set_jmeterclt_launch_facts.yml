@@ -1,0 +1,12 @@
+---
+- set_fact: instance_type="jmeterclt"
+
+- name: Generate jmeterclt instance names(s)
+  set_fact:
+    scratch_name: "{{ cluster_id }}-{{ instance_type }}-{{ '%05x' | format(1048576 | random) }}"
+  register: jmeterclt_names_output
+  with_sequence: count={{ num_jmeterclts }}
+
+- set_fact:
+    jmeterclt_names: "{{ jmeterclt_names_output.results | default([]) }}"
+

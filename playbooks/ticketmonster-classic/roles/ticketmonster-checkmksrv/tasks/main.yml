@@ -1,0 +1,115 @@
+---
+
+- name: install fedora repo
+  yum: name=https://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-7.noarch.rpm state=present
+  become: yes
+  become_user: root
+
+- name: replace repo
+  command: sed -i -e "s/^enabled=1/enabled=0/" /etc/yum.repos.d/epel.repo
+  become: yes
+  become_user: root
+
+  # https://mathias-kettner.de/support/1.2.8p5/check-mk-raw-1.2.8p5-el7-36.x86_64.rpm
+- name: download checkmk
+# get_url: src=https://mathias-kettner.de/support/1.2.8p5/check-mk-raw-1.2.8p5-el7-36.x86_64.rpm dest=/tmp
+  yum: name=https://mathias-kettner.de/support/1.2.8p5/check-mk-raw-1.2.8p5-el7-36.x86_64.rpm state=present
+
+  #yum localinstall --nogpgcheck omd-1.2.4p2.mmk-rh65-32.x86_64.rpm
+
+  # Test
+- name: test omd installation
+  command: omd version
+  register: result
+
+- fail: msg="OMD Ausgabe hat nicht den erwarteten Wert"
+  when: result.stdout != 'OMD - Open Monitoring Distribution Version 1.2.8p5'
+
+- name: create omd
+  command: omd create mysite
+
+- name: start omd
+  command: omd start mysite
+
+#- name: configure omd
+#  command: omd config {{ omdistro_site }} set {{ item.name }} {{ item.value }}
+#  when: omdistro_site_facts[item.name] is defined and omdistro_site_facts[item.name] != item.value
+#  with_items: "{{ omdistro_site_config }}"
+#  notify: restart omd
+
+#- name: start omd
+#  service: name=omd state=started enabled=yes
+
+#- name: template thruk menu_local.conf to add wato
+#  template: >-
+#      src=menu_local.conf.j2
+#      dest=/opt/omd/sites/{{ omdistro_site }}/etc/thruk/menu_local.conf
+#      owner={{ omdistro_site }}
+#      group={{ omdistro_site }}
+#      backup=yes
+#
+#- name: template timeperiods.cfg
+#  template: >
+#      src=timeperiods.cfg.j2
+#      dest=/opt/omd/sites/{{ omdistro_site }}/etc/nagios/conf.d/timeperiods.cfg
+#      owner={{ omdistro_site }}
+#      group={{ omdistro_site }}
+#      backup=yes
+#
+#- name: template hosts.mk
+#  template: >
+#      src=hosts.mk.j2
+#      dest=/opt/omd/sites/{{ omdistro_site }}/etc/check_mk/conf.d/hosts.mk
+#      owner={{ omdistro_site }}
+#      group={{ omdistro_site }}
+#      backup=yes
+#  notify: cmk inventory
+#
+#- name: template groups.mk
+#  template: >
+#      src=groups.mk.j2
+#      dest=/opt/omd/sites/{{ omdistro_site }}/etc/check_mk/conf.d/groups.mk
+#      owner={{ omdistro_site }}
+#      group={{ omdistro_site }}
+#      backup=yes
+#  notify: cmk reload
+#
+#- name: template main.mk
+#  template: >
+#      src=main.mk.j2
+#      dest=/opt/omd/sites/{{ omdistro_site }}/etc/check_mk/main.mk
+#      owner={{ omdistro_site }}
+#      group={{ omdistro_site }}
+#      backup=yes
+#  notify: cmk reload
+#
+#- name: stat wato contacts.mk
+#  stat: path=/opt/omd/sites/{{ omdistro_site }}/etc/check_mk/conf.d/wato/contacts.mk
+#  register: stat_wato_contacts
+#
+#- name: template wato contacts.mk if does not exist
+#  template: >-
+#      src=wato_contacts.mk.j2
+#      dest=/opt/omd/sites/{{ omdistro_site }}/etc/check_mk/conf.d/wato/contacts.mk
+#      owner={{ omdistro_site }}
+#      group={{ omdistro_site }}
+#      backup=yes
+#  when: not stat_wato_contacts.stat.exists
+#  notify: cmk reload
+#
+#- name: stat multisite wato users.mk
+#  stat: path=/opt/omd/sites/{{ omdistro_site }}/etc/check_mk/multisite.d/wato/users.mk
+#  register: stat_wato_users
+#
+#- name: template users.mk if does not exist
+#  template: >-
+#      src=wato_users.mk.j2
+#      dest=/opt/omd/sites/{{ omdistro_site }}/etc/check_mk/multisite.d/wato/users.mk
+#      owner={{ omdistro_site }}
+#      group={{ omdistro_site }}
+#      backup=yes
+#  when: not stat_wato_users.stat.exists
+#
+#- name: scan for parent/child relationships
+#  command: su -c "cmk --scan-parents" -l {{omdistro_site}}
+#  when: omdistro_scan_parents

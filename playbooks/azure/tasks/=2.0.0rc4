@@ -1,0 +1,40 @@
+Collecting azure
+  Downloading azure-1.0.3.zip
+Collecting azure-mgmt==0.20.2 (from azure)
+  Downloading azure-mgmt-0.20.2.zip
+Collecting azure-servicebus==0.20.1 (from azure)
+  Using cached azure_servicebus-0.20.1-py2.py3-none-any.whl
+Collecting azure-storage==0.20.3 (from azure)
+  Downloading azure_storage-0.20.3-py2-none-any.whl (86kB)
+Collecting azure-servicemanagement-legacy==0.20.2 (from azure)
+  Using cached azure_servicemanagement_legacy-0.20.2-py2.py3-none-any.whl
+Collecting azure-mgmt-compute==0.20.1 (from azure-mgmt==0.20.2->azure)
+  Downloading azure_mgmt_compute-0.20.1-py2.py3-none-any.whl (72kB)
+Collecting azure-mgmt-network==0.20.1 (from azure-mgmt==0.20.2->azure)
+  Downloading azure_mgmt_network-0.20.1-py2.py3-none-any.whl (77kB)
+Collecting azure-mgmt-resource==0.20.1 (from azure-mgmt==0.20.2->azure)
+  Downloading azure_mgmt_resource-0.20.1-py2.py3-none-any.whl
+Collecting azure-mgmt-storage==0.20.0 (from azure-mgmt==0.20.2->azure)
+  Downloading azure_mgmt_storage-0.20.0-py2.py3-none-any.whl
+Collecting azure-common (from azure-servicebus==0.20.1->azure)
+  Downloading azure_common-1.1.4-py2.py3-none-any.whl
+Requirement already satisfied (use --upgrade to upgrade): requests in /usr/lib/python2.7/site-packages (from azure-servicebus==0.20.1->azure)
+Requirement already satisfied (use --upgrade to upgrade): python-dateutil in /usr/lib/python2.7/site-packages (from azure-storage==0.20.3->azure)
+Requirement already satisfied (use --upgrade to upgrade): futures in /usr/lib/python2.7/site-packages (from azure-storage==0.20.3->azure)
+Collecting azure-nspkg (from azure-storage==0.20.3->azure)
+  Using cached azure_nspkg-1.0.0-py2.py3-none-any.whl
+Collecting azure-mgmt-common (from azure-mgmt-compute==0.20.1->azure-mgmt==0.20.2->azure)
+  Downloading azure_mgmt_common-0.20.0-py2.py3-none-any.whl
+Requirement already satisfied (use --upgrade to upgrade): six>=1.5 in /usr/lib/python2.7/site-packages (from python-dateutil->azure-storage==0.20.3->azure)
+Collecting azure-mgmt-nspkg (from azure-mgmt-common->azure-mgmt-compute==0.20.1->azure-mgmt==0.20.2->azure)
+  Using cached azure_mgmt_nspkg-1.0.0-py2.py3-none-any.whl
+Building wheels for collected packages: azure, azure-mgmt
+  Running setup.py bdist_wheel for azure: started
+  Running setup.py bdist_wheel for azure: finished with status 'done'
+  Stored in directory: /root/.cache/pip/wheels/4b/7c/ed/cc5daa037d7647358c807a30ec187bb7389a2e18c9f61ea64e
+  Running setup.py bdist_wheel for azure-mgmt: started
+  Running setup.py bdist_wheel for azure-mgmt: finished with status 'done'
+  Stored in directory: /root/.cache/pip/wheels/56/48/ec/d7ddb1cb5ca17a388615fb2b23ca49c4f2a9c671b2df7bde01
+Successfully built azure azure-mgmt
+Installing collected packages: azure-nspkg, azure-common, azure-mgmt-nspkg, azure-mgmt-common, azure-mgmt-compute, azure-mgmt-network, azure-mgmt-resource, azure-mgmt-storage, azure-mgmt, azure-servicebus, azure-storage, azure-servicemanagement-legacy, azure
+Successfully installed azure-1.0.3 azure-common-1.1.4 azure-mgmt-0.20.2 azure-mgmt-common-0.20.0 azure-mgmt-compute-0.20.1 azure-mgmt-network-0.20.1 azure-mgmt-nspkg-1.0.0 azure-mgmt-resource-0.20.1 azure-mgmt-storage-0.20.0 azure-nspkg-1.0.0 azure-servicebus-0.20.1 azure-servicemanagement-legacy-0.20.2 azure-storage-0.20.3

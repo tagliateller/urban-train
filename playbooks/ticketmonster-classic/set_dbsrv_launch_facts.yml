@@ -1,0 +1,12 @@
+---
+- set_fact: instance_type="dbsrv"
+
+- name: Generate dbsrv instance names(s)
+  set_fact:
+    scratch_name: "{{ cluster_id }}-{{ instance_type }}-{{ '%05x' | format(1048576 | random) }}"
+  register: dbsrv_names_output
+  with_sequence: count={{ num_dbsrvs }}
+
+- set_fact:
+    dbsrv_names: "{{ dbsrv_names_output.results | default([]) }}"
+

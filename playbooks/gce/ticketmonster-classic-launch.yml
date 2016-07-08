@@ -1,0 +1,50 @@
+---
+- name: Launch instance(s)
+  hosts: localhost
+  strategy: debug
+  connection: local
+  become: no
+  gather_facts: no
+
+  vars_files:
+    - ticketmonster-vars.yml
+  
+  tasks:
+
+  # mariadb-server
+  - include: ../ticketmonster-classic/set_dbsrv_launch_facts.yml
+  - include: tasks/launch_instances.yml
+    vars:
+      instances: "{{ dbsrv_names }}"
+      gce_machine_type: "{{ lookup('env', 'gce_machine_dbsrv_type') | default(lookup('env', 'gce_machine_type'), true) }}"
+      gce_machine_image: "{{ lookup('env', 'gce_machine_dbsrv_image') | default(lookup('env', 'gce_machine_image'), true) }}"
+    when: num_dbsrvs > 0
+
+  # jboss-server
+  - include: ../ticketmonster-classic/set_appsrv_launch_facts.yml
+  - include: task/launch_instances.yml
+    vars:
+      instances: "{{ appsrv_names }}"     
+      gce_machine_type: "{{ lookup('env', 'gce_machine_appsrv_type') | default(lookup('env', 'gce_machine_type'), true) }}"
+      gce_machine_image: "{{ lookup('env', 'gce_machine_appsrv_image') | default(lookup('env', 'gce_machine_image'), true) }}"
+    when: num_appsrvs > 0 
+
+  # checkmk-server
+  - include: ../ticketmonster-classic/set_checkmksrv_launch_facts.yml
+  - include: tasks/launch_instances.yml
+    vars:
+      instances: "{{ checkmksrv_names }}"
+      gce_machine_type: "{{ lookup('env', 'gce_machine_checkmksrv_type') | default(lookup('env', 'gce_machine_type'), true) }}"
+      gce_machine_image: "{{ lookup('env', 'gce_machine_checkmksrv_image') | default(lookup('env', 'gce_machine_image'), true) }}"
+    when: num_checkmksrvs > 0
+
+  # jmeter-client
+  - include: ../ticketmonster-classic/set_jmeterclt_launch_facts.yml
+  - include: tasks/launch_instances.yml
+    vars:
+      instances: "{{ jmeterclt_names }}"
+      gce_machine_type: "{{ lookup('env', 'gce_machine_jmeterclt_type') | default(lookup('env', 'gce_machine_type'), true) }}"
+      gce_machine_image: "{{ lookup('env', 'gce_machine_jmeterclt_image') | default(lookup('env', 'gce_machine_image'), true) }}"
+    when: num_jmeterclts > 0
+
+- include: ../ticketmonster-classic/install.yml

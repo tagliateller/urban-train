@@ -1,0 +1,12 @@
+---
+- set_fact: instance_type="devclt"
+
+- name: Generate devclt instance names(s)
+  set_fact:
+    scratch_name: "{{ cluster_id }}-{{ instance_type }}-{{ '%05x' | format(1048576 | random) }}"
+  register: devclt_names_output
+  with_sequence: count={{ num_devclts }}
+
+- set_fact:
+    devclt_names: "{{ devclt_names_output.results | default([]) }}"
+
