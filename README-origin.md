@@ -91,6 +91,9 @@ v2 ping attempt failed with error: Get http://172.30.199.110:5000/v2/: dial tcp 
  v1 ping attempt failed with error: Get http://172.30.199.110:5000/v1/_ping: dial tcp 172.30.199.110:5000: i/o timeout
 
 
+## Providing Applications across Env
+
+https://blog.openshift.com/promoting-applications-across-environments/
 
 ## Neustart Cluster
 
