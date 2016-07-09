@@ -1,19 +1,21 @@
 ---
 
-- hosts: tag_host-type-master 
-
-  vars_files:
-    - secrets.yml
+- name: Create instance(s)
+  hosts: localhost
+  gather_facts: yes
+  connection: local
 
   tasks:
 
-    - name: install httpd-tools
-      yum: name=httpd-tools state=installed
-
-    - name: add directory and htpasswd file
-      command: htpasswd -cb /etc/origin/master/htpasswd {{ origin_console_username }} {{ origin_console_password }}
-      become: yes
-      become_user: root 
+#  identityProviders:
+#  - challenge: true
+#    login: true
+#    mappingMethod: claim
+#    name: allow_all
+#    provider:
+#      apiVersion: v1
+#      kind: HTPasswdPasswordIdentityProvider
+#      file: /etc/origin/master/htpasswd
 
     - name: zeile in master-config.yaml hinzufügen (1)
       lineinfile: dest=master-config.yaml regexp="^\ \ \ \ name\:\ allow_all" line="    name{{':'}} htpasswd_provider"
@@ -21,9 +23,3 @@
     - name: zeile in master-config.yaml hinzufügen (2)
       lineinfile: dest=master-config.yaml regexp="^      kind\:\ AllowAllIdentityProvider" line="      kind{{':'}} HTPasswdPasswordIdentityProvider\n      file{{':'}} /etc/origin/master/htpasswd"
 
-    - name: restart master
-      service: name=origin-master.service state=restarted
-
-
-
-    
