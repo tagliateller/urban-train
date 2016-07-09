@@ -105,40 +105,12 @@ sudo oc login -u system:admin -n default --config=/etc/origin/master/admin.kubec
 
 ## Playbook htpasswd (dynamic inv)
 
-inventory/gce/hosts/gce.py --list # OK
-[vagrant@localhost paas]$ ansible-playbook -i inventory/gce/hosts playbooks/origin-set-htpasswd.yml
-No handlers could be found for logger "libcloud.common.google"
+eval `ssh-agent`
+ssh-add ~/.ssh/google-key # ?
 
-ERROR! The file inventory/gce/hosts/gce.py is marked as executable, but failed to execute correctly. If this is not supposed to be an executable script, correct this with `chmod -x inventory/gce/hosts/gce.py`.
-failed to parse executable inventory script results from /home/vagrant/workspace/paas/inventory/gce/hosts/gce.py: Syntax Error while loading YAML.
+export GCE_INI_PATH=~/.gce/gce.ini
 
-
-The error appears to have been in '<string>': line 4, column 24, but may
-be elsewhere in the file depending on the exact syntax problem.
-
-inventory/gce/hosts/gce.py:19: Error parsing host definition ''''': No closing quotation
-
-OK - das wiederum geht:
-
-[vagrant@localhost openshift-ansible]$ cd ..
-[vagrant@localhost workspace]$ cd paas/
-[vagrant@localhost paas]$ ansible-playbook -i ../openshift-ansible/inventory/gce/hosts playbooks/origin-set-htpasswd.yml
-
-PLAY [tag_host-type-master] ****************************************************
-
-TASK [setup] *******************************************************************
-fatal: [origin-dev-master-ba797]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh.", "unreachable": true}
-        to retry, use: --limit @playbooks/origin-set-htpasswd.retry
-
-PLAY RECAP *********************************************************************
-origin-dev-master-ba797    : ok=0    changed=0    unreachable=1    failed=0
-
-[vagrant@localhost paas]$
-
-???? WARUM ????
-
- 
-
+TODO: Prüfen, warum das eigene Inventory nicht geht ? 
 
 
 

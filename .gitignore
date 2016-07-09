@@ -3,3 +3,4 @@
 secrets.yml
 lab-inventory
 *-inventory
+master-config.yaml

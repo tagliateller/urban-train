@@ -183,6 +183,12 @@ class GceInventory(object):
         args[1] = os.environ.get('GCE_PEM_FILE_PATH', args[1])
         kwargs['project'] = os.environ.get('GCE_PROJECT', kwargs['project'])
 
+        # DEBUG
+        print "args-0 %s." % args[0]
+	print "args-1 %s." % args[1]
+	print "kwargs %s." % kwargs['project']
+        # DEBUG - END
+
         # Retrieve and return the GCE driver.
         gce = get_driver(Provider.GCE)(*args, **kwargs)
         gce.connection.user_agent_append(
