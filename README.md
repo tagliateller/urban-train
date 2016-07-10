@@ -1,13 +1,36 @@
-# OpenShift Origin
+# Cloud Testing
 
 
 ## GCE
 
-source ~/.gce/gce_credentials
+REM source ~/.gce/gce_credentials
 source ~/.gce/gce_config
-ansible-playbook playbooks/gce/ticketmonster-classic-launch.yml -u cloud-user
+export GCE_INI_PATH=~/.gce/gce.ini
+eval `ssh-agent`
+ssh-add ~/.ssh/google_compute_engine
+ansible-playbook -i inventory/gce/hosts playbooks/gce/ticketmonster-classic-launch.yml -u cloud-user
+ODER
+ansible-playbook -i ../openshift-ansible/inventory/gce/hosts playbooks/gce/ticketmonster-classic-launch.yml -u cloud-user
 
-Bildung des Namens noch nicht vollständig - Name steht in Scratch drin, aber nicht als Ergebnis
+TODO Bildung des Namens noch nicht vollständig - Name steht in Scratch drin, aber nicht als Ergebnis
+TODO Hinzufügen des Hosts - hier sind noch oo-Variablen drin. Ggf. das einfach weglassen und auf dyn. Inventory setzen
+
+TASK [Launch instance(s)] ******************************************************
+changed: [localhost]
+
+TASK [Add new instances to groups and set variables needed] ********************
+[DEPRECATION WARNING]: Using bare variables is deprecated. Update your playbooks so that the environment value uses the full variable syntax ('{{gce.instance_data |
+default([], true)}}').
+This feature will be removed in a future release. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+fatal: [localhost]: FAILED! => {"failed": true, "msg": "template error while templating string: no filter named 'oo_prepend_strings_in_list'. String: {{ item.tags | oo_prepend_strings_in_list('tag_') | join(',') }}"}
+Debugger invoked
+(debug) c
+        to retry, use: --limit @playbooks/gce/ticketmonster-classic-launch.retry
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=12   changed=1    unreachable=0    failed=1
+
+[vagrant@localhost paas]$
 
 ## AWS
 
