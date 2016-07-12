@@ -184,9 +184,9 @@ class GceInventory(object):
         kwargs['project'] = os.environ.get('GCE_PROJECT', kwargs['project'])
 
         # DEBUG
-        print "args-0 %s." % args[0]
-	print "args-1 %s." % args[1]
-	print "kwargs %s." % kwargs['project']
+        #print "args-0 %s." % args[0]
+	#print "args-1 %s." % args[1]
+	#print "kwargs %s." % kwargs['project']
         # DEBUG - END
 
         # Retrieve and return the GCE driver.
