@@ -3,14 +3,18 @@
 
 ## GCE
 
+```bash
 REM source ~/.gce/gce_credentials
 source ~/.gce/gce_config
+ODER
+source ~/.gce_creds
 export GCE_INI_PATH=~/.gce/gce.ini
 eval `ssh-agent`
 ssh-add ~/.ssh/google_compute_engine
 ansible-playbook -i inventory/gce/hosts playbooks/gce/ticketmonster-classic-launch.yml -u cloud-user
 ODER
 ansible-playbook -i ../openshift-ansible/inventory/gce/hosts playbooks/gce/ticketmonster-classic-launch.yml -u cloud-user
+```
 
 TODO Bildung des Namens noch nicht vollständig - Name steht in Scratch drin, aber nicht als Ergebnis
 TODO Hinzufügen des Hosts - hier sind noch oo-Variablen drin. Ggf. das einfach weglassen und auf dyn. Inventory setzen
