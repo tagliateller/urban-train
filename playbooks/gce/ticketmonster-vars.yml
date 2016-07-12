@@ -1,6 +1,6 @@
 cluster_id: tm1
 
-num_dbsrvs: 1
+num_dbsrvs: 4
 num_appsrvs: 0
 num_devclts: 0
 num_jmeterclts: 0

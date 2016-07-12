@@ -18,22 +18,9 @@
 - name: debug project
   debug: msg="{{ lookup('env', 'GCE_PROJECT_ID') }}"
 
-#    - name: Launch instances
-#      gce:
-#          instance_names: origin-v3-master-f6094
-#          machine_type: "{{ machine_type_large }}"
-#          image: "{{ image }}"
-#          service_account_email: "{{ service_account_email }}"
-#          credentials_file: "{{ credentials_file }}"
-#          project_id: "{{ project_id }}"
-#          tags: origin
-#      register: gce
-
-
 - name: Launch instance(s)
   gce:
-#    instance_names: "{{ instances }}"
-    instance_names: "tm1-dbsrv-32afe"
+    instance_names: "{{ instances | join(',') }}"
     machine_type: "{{ gce_machine_type | default(deployment_vars['default'].machine_type, true) }}"
     image: "{{ gce_machine_image | default(deployment_vars['default'].image, true) }}"
     service_account_email: "{{ lookup('env', 'GCE_SERVICE_ACCOUNT_EMAIL_ADDRESS') }}"
@@ -44,9 +31,9 @@
 #    network: "{{ lookup('env', 'NETWORK') }}"
 # unsupported in 1.9.+
     #service_account_permissions: "datastore,logging-write"
-#    tags:
-#      - created-by-{{ lookup('env', 'LOGNAME') |default(cluster, true) }}
-#      - clusterid-{{ cluster_id }}
+    tags:
+      - created-by-{{ lookup('env', 'LOGNAME') |default(cluster, true) }}
+      - clusterid-{{ cluster_id }}
 #    metadata:
 #      startup-script: |
 #        #!/bin/bash
@@ -55,16 +42,16 @@
   when: instances |length > 0
   register: gce
 
-#- name: Add new instances to groups and set variables needed
-#  add_host:
-#    hostname: "{{ item.name }}"
-#    ansible_ssh_host: "{{ item.public_ip }}"
-#    ansible_ssh_user: "{{ deployment_vars['default'].ssh_user }}"
-#    ansible_become: "{{ deployment_vars['default'].become }}"
-#    groups: "{{ item.tags | oo_prepend_strings_in_list('tag_') | join(',') }}"
-#    gce_public_ip: "{{ item.public_ip }}"
-#    gce_private_ip: "{{ item.private_ip }}"
-#  with_items: gce.instance_data | default([], true)
+- name: Add new instances to groups and set variables needed
+  add_host:
+    hostname: "{{ item.name }}"
+    ansible_ssh_host: "{{ item.public_ip }}"
+    ansible_ssh_user: "{{ deployment_vars['default'].ssh_user }}"
+    ansible_become: "{{ deployment_vars['default'].become }}"
+    groups: "{{ item.tags | paas_prepend_strings_in_list('tag_') | join(',') }}"
+    gce_public_ip: "{{ item.public_ip }}"
+    gce_private_ip: "{{ item.private_ip }}"
+  with_items: gce.instance_data | default([], true)
 
 - name: Wait for ssh
   wait_for: port=22 host={{ item.public_ip }}
@@ -76,4 +63,5 @@
   until: result.rc == 0
   retries: 30
   delay: 5
-  
+  with_items: gce.instance_data | default([], true)
+ 
