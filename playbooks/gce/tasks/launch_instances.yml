@@ -3,35 +3,38 @@
 - name: debug instances names
   debug: msg="{{ instances }}"
 
-- name: debug zone
-  debug: msg="{{ lookup('env', 'ZONE') }}"
+#- name: debug zone
+#  debug: msg="{{ lookup('env', 'ZONE') }}"
 
-- name: debug network
-  debug: msg="{{ lookup('env', 'NETWORK') }}"
+#- name: debug network
+#  debug: msg="{{ lookup('env', 'NETWORK') }}"
 
-- name: debug pem_file
-  debug: msg="{{ lookup('env', 'GCE_SERVICE_ACCOUNT_PEM_FILE_PATH') }}"
+#- name: debug pem_file
+#  debug: msg="{{ lookup('env', 'GCE_SERVICE_ACCOUNT_PEM_FILE_PATH') }}"
  
-- name: debug email
-  debug: msg="{{ lookup('env', 'GCE_SERVICE_ACCOUNT_EMAIL_ADDRESS') }}"
+#- name: debug email
+#  debug: msg="{{ lookup('env', 'GCE_SERVICE_ACCOUNT_EMAIL_ADDRESS') }}"
 
-- name: debug project
-  debug: msg="{{ lookup('env', 'GCE_PROJECT_ID') }}"
+#- name: debug project
+#  debug: msg="{{ lookup('env', 'GCE_PROJECT_ID') }}"
 
 - name: Launch instance(s)
   gce:
     instance_names: "{{ instances | join(',') }}"
     machine_type: "{{ gce_machine_type | default(deployment_vars['default'].machine_type, true) }}"
     image: "{{ gce_machine_image | default(deployment_vars['default'].image, true) }}"
-    service_account_email: "{{ lookup('env', 'GCE_SERVICE_ACCOUNT_EMAIL_ADDRESS') }}"
-    #credentials_file: "{{ lookup('env', 'GCE_CREDENTIALS_FILE_PATH') }}"
-    pem_file: "{{ lookup('env', 'GCE_SERVICE_ACCOUNT_PEM_FILE_PATH') }}"
-    project_id: "{{ lookup('env', 'GCE_PROJECT_ID') }}"
+#    service_account_email: "{{ lookup('env', 'GCE_SERVICE_ACCOUNT_EMAIL_ADDRESS') }}"
+    service_account_email: "{{ lookup('env', 'GCE_EMAIL') }}"
+    credentials_file: "{{ lookup('env', 'GCE_CREDENTIALS_FILE_PATH') }}"
+    #pem_file: "{{ lookup('env', 'GCE_SERVICE_ACCOUNT_PEM_FILE_PATH') }}"
+#    project_id: "{{ lookup('env', 'GCE_PROJECT_ID') }}"
+    project_id: "{{ lookup('env', 'GCE_PROJECT') }}"
 #    zone: "{{ lookup('env', 'ZONE') }}"
 #    network: "{{ lookup('env', 'NETWORK') }}"
 # unsupported in 1.9.+
     #service_account_permissions: "datastore,logging-write"
     tags:
+      - dbserver
       - created-by-{{ lookup('env', 'LOGNAME') |default(cluster, true) }}
       - clusterid-{{ cluster_id }}
 #    metadata:

@@ -9,9 +9,6 @@
   vars_files:
     - ticketmonster-vars.yml
 
-  vars:
-    - dbsrv_names: []
-  
   tasks:
 
   # mariadb-server
