@@ -99,9 +99,12 @@ cluster.py prüfen, ggf. werden keine openshift-variablen gesetzt ? Sonst auch D
 
 ## Unicorn Test
 
-sudo yum -y install ruby
-sudo yum -y group install "Development Tools"
-gem install unicorn
+#sudo yum -y install ruby
+#sudo yum -y group install "Development Tools"
+#gem install unicorn
+
+http://tecadmin.net/install-ruby-2-2-on-centos-rhel/#
+
 
 
 
