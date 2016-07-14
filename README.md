@@ -105,6 +105,44 @@ cluster.py prüfen, ggf. werden keine openshift-variablen gesetzt ? Sonst auch D
 
 http://tecadmin.net/install-ruby-2-2-on-centos-rhel/#
 
+### App-Server
+
+[robert.bloy@instance-1 app]$ history
+    1  sudo yum install gcc-c++ patch readline readline-devel zlib zlib-devel
+    2  sudo yum -y install libyaml-devel libffi-devel openssl-devel make
+    3  sudo yum -y install bzip2 autoconf automake libtool bison iconv-devel sqlite-devel
+    4  sudo curl -sSL https://rvm.io/mpapis.asc | gpg --import -
+    5  sudo curl -L get.rvm.io | bash -s stable
+    6  curl -sSL https://rvm.io/mpapis.asc | gpg --import -
+    7  curl -L get.rvm.io | bash -s stable
+    8  source /etc/profile.d/rvm.sh
+    9  source ~/.profile 
+   10  source /etc/profile.d/rvm.sh
+   11  rvm reload
+   12  rvm requirements run
+   13  rvm install 2.2.4
+   14  rvm use 2.2.4 --default
+   15  ruby --version
+   16  gem install unicorn
+   17  unicorn
+   18  gem install rack
+   19  unicorn
+   20  mkdir app
+   21  cd app/
+   22  vi config.ru
+   23  unicorn
+   24  history
+[robert.bloy@instance-1 app]$ 
+
+```ruby
+app = proc do |env|
+
+  Math.sqrt rand
+  [200, {}, %w(hello world)]
+end
+run app
+```
+
 
 
 
