@@ -8,5 +8,9 @@
   with_sequence: count={{ num_appsrvs }}
 
 - set_fact:
-    appsrv_names: "{{ appsrv_names_output.results | default([]) }}"
+    appsrv_names: "{{ appsrv_names_output.results | default([])
+                      | paas_collect('ansible_facts')
+                      | paas_collect('scratch_name') }}"
 
+- name: debug appsrv names
+  debug: msg="{{ appsrv_names }}"

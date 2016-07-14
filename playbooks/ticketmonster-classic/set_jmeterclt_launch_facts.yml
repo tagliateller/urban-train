@@ -8,5 +8,10 @@
   with_sequence: count={{ num_jmeterclts }}
 
 - set_fact:
-    jmeterclt_names: "{{ jmeterclt_names_output.results | default([]) }}"
+    jmeterclt_names: "{{ jmeterclt_names_output.results | default([])
+                      | paas_collect('ansible_facts')
+                      | paas_collect('scratch_name') }}"
 
+- name: debug jmeterclt names
+  debug: msg="{{ jmeterclt_name }}"
+~                                    

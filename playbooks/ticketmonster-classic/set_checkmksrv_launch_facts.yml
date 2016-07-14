@@ -8,5 +8,9 @@
   with_sequence: count={{ num_checkmksrvs }}
 
 - set_fact:
-    checkmksrv_names: "{{ checkmksrv_names_output.results | default([]) }}"
+    checkmksrv_names: "{{ checkmksrv_names_output.results | default([])
+                      | paas_collect('ansible_facts')
+                      | paas_collect('scratch_name') }}"
 
+- name: debug checkmk names
+  debug: msg="{{ checkmksrv_names }}"

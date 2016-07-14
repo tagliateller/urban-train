@@ -8,5 +8,10 @@
   with_sequence: count={{ num_devclts }}
 
 - set_fact:
-    devclt_names: "{{ devclt_names_output.results | default([]) }}"
+    devclt_names: "{{ devclt_names_output.results | default([])
+                      | paas_collect('ansible_facts')
+                      | paas_collect('scratch_name') }}"
 
+- name: debug devclt names
+  debug: msg="{{ devclt_names }}"
+~                                    
