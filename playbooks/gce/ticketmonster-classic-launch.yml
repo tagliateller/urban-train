@@ -18,15 +18,17 @@
       instances: "{{ dbsrv_names }}"
       gce_machine_type: "{{ lookup('env', 'gce_machine_dbsrv_type') | default(lookup('env', 'gce_machine_type'), true) }}"
       gce_machine_image: "{{ lookup('env', 'gce_machine_dbsrv_image') | default(lookup('env', 'gce_machine_image'), true) }}"
+      instance_tag: dbsrvs
     when: num_dbsrvs > 0
 
   # jboss-server
   - include: ../ticketmonster-classic/set_appsrv_launch_facts.yml
-  - include: task/launch_instances.yml
+  - include: tasks/launch_instances.yml
     vars:
       instances: "{{ appsrv_names }}"     
       gce_machine_type: "{{ lookup('env', 'gce_machine_appsrv_type') | default(lookup('env', 'gce_machine_type'), true) }}"
       gce_machine_image: "{{ lookup('env', 'gce_machine_appsrv_image') | default(lookup('env', 'gce_machine_image'), true) }}"
+      instance_tag: appsrvs
     when: num_appsrvs > 0 
 
   # checkmk-server
@@ -36,6 +38,7 @@
       instances: "{{ checkmksrv_names }}"
       gce_machine_type: "{{ lookup('env', 'gce_machine_checkmksrv_type') | default(lookup('env', 'gce_machine_type'), true) }}"
       gce_machine_image: "{{ lookup('env', 'gce_machine_checkmksrv_image') | default(lookup('env', 'gce_machine_image'), true) }}"
+      instance_tag: checkmksrvs
     when: num_checkmksrvs > 0
 
   # jmeter-client
@@ -45,6 +48,7 @@
       instances: "{{ jmeterclt_names }}"
       gce_machine_type: "{{ lookup('env', 'gce_machine_jmeterclt_type') | default(lookup('env', 'gce_machine_type'), true) }}"
       gce_machine_image: "{{ lookup('env', 'gce_machine_jmeterclt_image') | default(lookup('env', 'gce_machine_image'), true) }}"
+      instance_tag: jmeterclts
     when: num_jmeterclts > 0
 
 - include: ../ticketmonster-classic/install.yml

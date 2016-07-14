@@ -1,5 +1,8 @@
 ---
 
+- name: debug
+  debug: msg="{{ num_dbsrvs }}"
+
 - name: Add repo file
   template: src=mariadb_centos.repo.j2 dest=/etc/yum.repos.d/mariadb.repo owner=root group=root mode=0644
   become: True

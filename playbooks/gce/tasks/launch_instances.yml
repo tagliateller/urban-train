@@ -34,7 +34,7 @@
 # unsupported in 1.9.+
     #service_account_permissions: "datastore,logging-write"
     tags:
-      - dbserver
+      - "{{ instance_tag }}" 
       - created-by-{{ lookup('env', 'LOGNAME') |default(cluster, true) }}
       - clusterid-{{ cluster_id }}
 #    metadata:

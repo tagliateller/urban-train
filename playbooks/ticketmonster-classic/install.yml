@@ -1,34 +1,35 @@
 ---
 
 - name: Install DB
-  hosts: dbsrvs
+  hosts: tag_dbsrvs
 
   vars_files:
+    - ../gce/ticketmonster-vars.yml
     - secrets.yml
 
   roles:
     - { role: ticketmonster-dbsrv, when: num_dbsrvs > 0 } 
 
 - name: Install JBoss
-  hosts: appsrvs
+  hosts: tag_appsrvs
 
   roles:
     - { role: ticketmonster-appsrv, when: num_appsrvs > 0 }
 
 - name: Install Ticketmonster
-  hosts: devclts
+  hosts: tag_devclts
 
   roles:
     - { role: ticketmonster-devclt, when: num_devclts > 0 }
 
 - name: Install JMeter Client
-  hosts: jmeterclts
+  hosts: tag_jmeterclts
 
   roles:
     - { role: ticketmonster-jmeterclt, when: num_jmeterclts > 0 }
 
 - name: Install CheckMK Server
-  hosts: checkmksrvs
+  hosts: tag_checkmksrvs
 
   roles:
     - { role: ticketmonster-checkmksrv, when: num_checkmksrvs > 0 }
