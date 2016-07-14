@@ -107,6 +107,7 @@ http://tecadmin.net/install-ruby-2-2-on-centos-rhel/#
 
 ### App-Server
 
+```bash
 [robert.bloy@instance-1 app]$ history
     1  sudo yum install gcc-c++ patch readline readline-devel zlib zlib-devel
     2  sudo yum -y install libyaml-devel libffi-devel openssl-devel make
@@ -133,6 +134,7 @@ http://tecadmin.net/install-ruby-2-2-on-centos-rhel/#
    23  unicorn
    24  history
 [robert.bloy@instance-1 app]$ 
+```
 
 ```ruby
 app = proc do |env|
