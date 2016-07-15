@@ -13,4 +13,4 @@
                       | paas_collect('scratch_name') }}"
 
 - name: debug jmeterclt names
-  debug: msg="{{ jmeterclt_name }}"
+  debug: msg="{{ jmeterclt_names }}"
