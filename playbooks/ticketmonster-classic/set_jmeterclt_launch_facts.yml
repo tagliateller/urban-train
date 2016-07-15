@@ -14,4 +14,3 @@
 
 - name: debug jmeterclt names
   debug: msg="{{ jmeterclt_name }}"
-~                                    

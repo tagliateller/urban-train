@@ -14,4 +14,3 @@
 
 - name: debug devclt names
   debug: msg="{{ devclt_names }}"
-~                                    
