@@ -14,8 +14,11 @@
     
   tasks:
 
+  - name: debug num 11
+    debug: msg="{{ groups['tag_dbsrvs'] }}"
+
   - name: debug num dbsrvs hosts
-    debug: msg={{ num_dbsrvs_hosts }}
+    debug: msg="{{ num_dbsrvs_hosts }}"
     
   # mariadb-server
   - include: ../ticketmonster-classic/set_dbsrv_launch_facts.yml
