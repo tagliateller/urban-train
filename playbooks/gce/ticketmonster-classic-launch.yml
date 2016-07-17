@@ -10,7 +10,7 @@
     - ticketmonster-vars.yml
 
   vars:
-    num_dbsrvs_hosts: length(groups['redis-proxy'])
+    num_dbsrvs_hosts: length(groups['tag_dbsrvs'])
     
   tasks:
 
@@ -22,7 +22,7 @@
       gce_machine_type: "{{ lookup('env', 'gce_machine_dbsrv_type') | default(lookup('env', 'gce_machine_type'), true) }}"
       gce_machine_image: "{{ lookup('env', 'gce_machine_dbsrv_image') | default(lookup('env', 'gce_machine_image'), true) }}"
       instance_tag: dbsrvs
-    when: num_dbsrvs > 0
+    when: ( num_dbsrvs > 0 ) && ( num_dbsrvs > num_dbsrvs_hosts )
 
   # jboss-server
   - include: ../ticketmonster-classic/set_appsrv_launch_facts.yml
