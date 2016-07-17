@@ -10,7 +10,7 @@
     - ticketmonster-vars.yml
 
   vars:
-    num_dbsrvs_hosts: {{ length(groups['tag_dbsrvs']) }}
+    num_dbsrvs_hosts: "{{ length(groups['tag_dbsrvs']) }}"
     
   tasks:
 
