@@ -14,6 +14,9 @@
     
   tasks:
 
+  - name: debug num dbsrvs hosts
+    debug: msg={{ num_dbsrvs_hosts }}
+    
   # mariadb-server
   - include: ../ticketmonster-classic/set_dbsrv_launch_facts.yml
   - include: tasks/launch_instances.yml
