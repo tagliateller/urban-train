@@ -69,6 +69,11 @@ TODO: Anbindung an JBoss
 
 https://github.com/PCextreme/ansible-role-mariadb
 
+TASK [ticketmonster-dbsrv : Set root Password] *********************************
+failed: [tm1-dbsrv-7a68b] (item=localhost) => {"failed": true, "item": "localhost", "msg": "unable to connect to database, check login_user and login_password are correct or /root/.my.cnf has the credentials. Exception message: (1045, \"Access denied for user 'root'@'localhost' (using password: YES)\")"}
+failed: [tm1-dbsrv-7a68b] (item=127.0.0.1) => {"failed": true, "item": "127.0.0.1", "msg": "unable to connect to database, check login_user and login_password are correct or /root/.my.cnf has the credentials. Exception message: (1045, \"Access denied for user 'root'@'localhost' (using password: YES)\")"}
+failed: [tm1-dbsrv-7a68b] (item=::1) => {"failed": true, "item": "::1", "msg": "unable to connect to database, check login_user and login_password are correct or /root/.my.cnf has the credentials. Exception message: (1045, \"Access denied for user 'root'@'localhost' (using password: YES)\")"}
+
 ## Facts
 
 ansible -i lab-inventory rdo-server.priv.tagliateller.nu -m setup
