@@ -9,6 +9,9 @@
   vars_files:
     - ticketmonster-vars.yml
 
+  vars:
+    num_dbsrvs_hosts: length(groups['redis-proxy'])
+    
   tasks:
 
   # mariadb-server
