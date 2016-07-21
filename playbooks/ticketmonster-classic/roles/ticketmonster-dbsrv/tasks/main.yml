@@ -16,11 +16,11 @@
     - MariaDB-server
     - MariaDB-client
 
-- name: Install MySQLdb Python package for secure installations.
-  yum: name=MySQL-python state=present
-  become: True
-  become_user: root
-  when: mysql_secure_installation and mysql_root_password is defined
+#- name: Install MySQLdb Python package for secure installations.
+#  yum: name=MySQL-python state=present
+#  become: True
+#  become_user: root
+#  when: mysql_secure_installation and mysql_root_password is defined
 
 #- name: Add configuration
 #  template: src={{ mysql_conf_tpl }} dest={{ mysql_conf_dir }}/{{ mysql_conf_file }} owner=root group=root mode=0644
@@ -38,12 +38,12 @@
 # UPDATE mysql.user SET Password=PASSWORD('mysecret') WHERE User='root';
 # FLUSH PRIVILEGES;
 
-- name: Set root Password
-  mysql_user: name=root host={{ item }} password={{ mysql_root_password }} state=present login_user=root login_password={{ mysql_root_password }}
-  with_items:
-    - localhost
-    - 127.0.0.1
-    - ::1
+#- name: Set root Password
+#  mysql_user: name=root host={{ item }} password={{ mysql_root_password }} state=present login_user=root login_password={{ mysql_root_password }}
+#  with_items:
+#    - localhost
+#    - 127.0.0.1
+#    - ::1
 
 #- name: Reload privilege tables
 #  command: 'mysql -ne "{{ item }}" -u root --password {{ mysql_root_password }}'
@@ -81,7 +81,9 @@
 #  changed_when: False
   
 - name: Anlage einer Datenbank für Ticketmonster
-  mysql_db: name=ticketmonster state=present login_user=root login_password={{ mysql_root_password }}
+#  mysql_db: name=ticketmonster state=present login_user=root login_password={{ mysql_root_password }}
+  mysql_db: name=ticketmonster state=present login_user=root
 
 - name: Anlage Nutzer 
-  mysql_user: name=ticketmonster password=ticketmonster priv=*.*:ALL state=present login_user=root login_password={{ mysql_root_password }}
+#  mysql_user: name=ticketmonster password=ticketmonster priv=*.*:ALL state=present login_user=root login_password={{ mysql_root_password }}
+  mysql_user: name=ticketmonster password=ticketmonster priv=*.*:ALL state=present login_user=root
