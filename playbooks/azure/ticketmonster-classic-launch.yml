@@ -16,6 +16,17 @@
   - include: tasks/launch_instances.yml
     vars:
       instances: "{{ dbsrv_names }}"
+      azure_resource_group: tm_group
+      azure_storage_account_name: tm_storage_account
+      azure_virtual_network_name: tm_vnet
+      azure_virtual_sub_network_name: tm_vnet_subnet
+      azure_public_ip_name: tm_pip_dbsrv_001
+      azure_security_group_name: tm_sec_group
+      azure_nic_name: tm_nic_dbsrv_001
+      azure_vm_name: tm_vm_dbsrv_001
+      azure_vm_size: Standard_A1
+      azure_user_name: azureuser
+      azure_ssh_keys: ~/.ssh/id_rsa.pub
     when: num_dbsrvs > 0
 
   # jboss-server
@@ -23,6 +34,17 @@
   - include: task/launch_instances.yml
     vars:
       instances: "{{ appsrv_names }}"     
+      azure_resource_group: tm_group
+      azure_storage_account_name: tm_storage_account
+      azure_virtual_network_name: tm_vnet
+      azure_virtual_sub_network_name: tm_vnet_subnet
+      azure_public_ip_name: tm_pip_appsrv_001
+      azure_security_group_name: tm_sec_group
+      azure_nic_name: tm_nic_appsrv_001
+      azure_vm_name: tm_vm_appsrv_001
+      azure_vm_size: Standard_A1
+      azure_user_name: azureuser
+      azure_ssh_keys: ~/.ssh/id_rsa.pub
     when: num_appsrvs > 0 
 
   # checkmk-server
@@ -30,6 +52,17 @@
   - include: tasks/launch_instances.yml
     vars:
       instances: "{{ checkmksrv_names }}"
+      azure_resource_group: tm_group
+      azure_storage_account_name: tm_storage_account
+      azure_virtual_network_name: tm_vnet
+      azure_virtual_sub_network_name: tm_vnet_subnet
+      azure_public_ip_name: tm_pip_checkmksrv_001
+      azure_security_group_name: tm_sec_group
+      azure_nic_name: tm_nic_checkmksrv_001
+      azure_vm_name: tm_vm_checkmksrv_001
+      azure_vm_size: Standard_A1
+      azure_user_name: azureuser
+      azure_ssh_keys: ~/.ssh/id_rsa.pub
     when: num_checkmksrvs > 0
 
   # jmeter-client
@@ -37,6 +70,17 @@
   - include: tasks/launch_instances.yml
     vars:
       instances: "{{ jmeterclt_names }}"
+      azure_resource_group: tm_group
+      azure_storage_account_name: tm_storage_account
+      azure_virtual_network_name: tm_vnet
+      azure_virtual_sub_network_name: tm_vnet_subnet
+      azure_public_ip_name: tm_pip_jmeterclt_001
+      azure_security_group_name: tm_sec_group
+      azure_nic_name: tm_nic_jmeterclt_001
+      azure_vm_name: tm_vm_jmeterclt_001
+      azure_vm_size: Standard_A1
+      azure_user_name: azureuser
+      azure_ssh_keys: ~/.ssh/id_rsa.pub
     when: num_jmeterclts > 0
 
 - include: ../ticketmonster-classic/install.yml
