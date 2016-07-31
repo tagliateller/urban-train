@@ -1,11 +1,11 @@
 ---
 
-- name: Install DB
+- name: Install DB-Server
   hosts: tag_dbsrvs
 
-  vars_files:
-    - ../gce/ticketmonster-vars.yml
-    - secrets.yml
+# vars_files:
+#   - ../gce/ticketmonster-vars.yml
+#   - secrets.yml
 
   roles:
     - { role: ticketmonster-dbsrv, when: num_dbsrvs > 0 } 
