@@ -46,6 +46,10 @@ Agent pid 3822
 Identity added: /home/vagrant/.ssh/id_rsa (/home/vagrant/.ssh/id_rsa)
 [vagrant@localhost openshift-ansible]$
 
+die globalen Variablen gehen so noch nicht ...
+[vagrant@localhost paas]$ ansible-playbook "-e 'num_dbsrvs=1 cluster_id=tm1'" -i ../openshift-ansible/inventory/aws/hosts/ec2.py playbooks/aws/ticketmonster-classic-launc
+h.yml -u ec2-user --ask-vault
+
 ## Monitoring
 
 TODO

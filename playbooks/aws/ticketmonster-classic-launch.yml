@@ -6,8 +6,8 @@
   become: no
   gather_facts: no
 
-  vars_files:
-    - ticketmonster-vars.yml
+#  vars_files:
+#    - ticketmonster-vars.yml
   
   tasks:
 
