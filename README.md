@@ -108,6 +108,8 @@ https://github.com/2015-Middleware-Keynote/demo-ansible/blob/master/run.py
 
 cluster.py prüfen, ggf. werden keine openshift-variablen gesetzt ? Sonst auch DEBUG in 
 
+Problem mit Samples: tat wird lokal gebaut und dann auf remote dir entpackt, am besten mal separat testen
+
 ## Unicorn Test
 
 #sudo yum -y install ruby
