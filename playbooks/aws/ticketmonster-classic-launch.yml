@@ -20,7 +20,7 @@
 
   # jboss-server
   - include: ../ticketmonster-classic/set_appsrv_launch_facts.yml
-  - include: task/launch_instances.yml
+  - include: tasks/launch_instances.yml
     vars:
       instances: "{{ appsrv_names }}"     
     when: num_appsrvs > 0 

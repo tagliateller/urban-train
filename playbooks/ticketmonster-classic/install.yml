@@ -9,33 +9,33 @@
  
     - debug: msg="{{ num_dbsrvs }}"
 
-#- name: Install DB-Server
-#  hosts: tag_name_dbsrv
-#
-#  roles:
-#    - { role: ticketmonster-dbsrv, when: num_dbsrvs > 0 } 
-#
-#- name: Install JBoss
-#  hosts: tag_appsrvs
-#
-#  roles:
-#    - { role: ticketmonster-appsrv, when: num_appsrvs > 0 }
-#
-#- name: Install Ticketmonster
-#  hosts: tag_devclts
-#
-#  roles:
-#    - { role: ticketmonster-devclt, when: num_devclts > 0 }
-#
-#- name: Install JMeter Client
-#  hosts: tag_jmeterclts
-#
-#  roles:
-#    - { role: ticketmonster-jmeterclt, when: num_jmeterclts > 0 }
-#
-#- name: Install CheckMK Server
-#  hosts: tag_checkmksrvs
-#
-#  roles:
-#    - { role: ticketmonster-checkmksrv, when: num_checkmksrvs > 0 }
+- name: Install DB-Server
+  hosts: tag_name_dbsrv
+
+  roles:
+    - { role: ticketmonster-dbsrv, when: num_dbsrvs > 0 } 
+
+- name: Install JBoss
+  hosts: tag_name_appsrv
+
+  roles:
+    - { role: ticketmonster-appsrv, when: num_appsrvs > 0 }
+
+- name: Install Ticketmonster
+  hosts: tag_name_devclt
+
+  roles:
+    - { role: ticketmonster-devclt, when: num_devclts > 0 }
+
+- name: Install JMeter Client
+  hosts: tag_name_jmeterclt
+
+  roles:
+    - { role: ticketmonster-jmeterclt, when: num_jmeterclts > 0 }
+
+- name: Install CheckMK Server
+  hosts: tag_name_checkmksrv
+
+  roles:
+    - { role: ticketmonster-checkmksrv, when: num_checkmksrvs > 0 }
 

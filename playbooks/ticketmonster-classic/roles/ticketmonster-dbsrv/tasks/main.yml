@@ -16,10 +16,10 @@
     - MariaDB-server
     - MariaDB-client
 
-#- name: Install MySQLdb Python package for secure installations.
-#  yum: name=MySQL-python state=present
-#  become: True
-#  become_user: root
+- name: Install MySQLdb Python package for secure installations.
+  yum: name=MySQL-python state=present
+  become: True
+  become_user: root
 #  when: mysql_secure_installation and mysql_root_password is defined
 
 #- name: Add configuration

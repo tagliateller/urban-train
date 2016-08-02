@@ -52,6 +52,9 @@ h.yml -u ec2-user --ask-vault
 
 -e "num_dbsrvs=1" usw. sollte gehen
 
+$ ansible-playbook -e "num_dbsrvs=1 num_appsrvs=1 num_checkmksrvs=1 num_jmeterclts=1 cluster_id=tm1" -i ../openshift-ansible/inventory/aws/hosts/e
+c2.py playbooks/aws/ticketmonster-classic-launch.yml -u ec2-user --ask-vault
+
 ## Monitoring
 
 TODO
