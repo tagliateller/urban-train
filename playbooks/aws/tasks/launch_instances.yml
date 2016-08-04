@@ -1,32 +1,34 @@
 ---
 # (ami-6d1c2007) centos 7
 
-- hosts: localhost
-  connection: local
-  gather_facts: False
+- name: Provision a set of instances
+  ec2:
+    group: oo-security-group
+    key_name: my-key-pair
+    instance_type: t2.micro
+    image: "ami-6d1c2007"
+    wait: true
+    region: "us-east-1"
+    count: "{{ instances | length }}"
+    instance_tags:
+      group: "{{ instance_type }}"
+  register: ec2
 
-  tasks:
-
-    - name: Provision a set of instances
-      ec2:
-         key_name: my_key
-         group: test
-         instance_type: t2.micro
-         image: "{{ ami_id }}"
-         wait: true
-         exact_count: 5
-         count_tag:
-            Name: Demo
-         instance_tags:
-            Name: Demo
-      register: ec2
+- name: add Name tag to instances
+  ec2_tag: resource={{ item.1.id }} region="us-east-1" state=present
+  with_together:
+    - instances
+    - ec2.instances
+  args: 
+    tags:
+      Name: "{{ item.0 }}"
 
 - name: Wait for ssh
   wait_for: "port=22 host={{ item.dns_name }}"
   with_items: ec2.instances
 
 - name: Wait for user setup
-  command: "ssh -o StrictHostKeyChecking=no -o PasswordAuthentication=no -o ConnectTimeout=10 -o UserKnownHostsFile=/dev/null {{ hostvars[item.0].ansible_ssh_user }}@{{ item.1.dns_name }} echo {{ hostvars[item.0].ansible_ssh_user }} user is setup"
+  command: "ssh -o StrictHostKeyChecking=no -o PasswordAuthentication=no -o ConnectTimeout=10 -o UserKnownHostsFile=/dev/null {{ ansible_ssh_user }}@{{ item.1.dns_name }} echo {{ ansible_ssh_user }} user is setup"
   register: result
   until: result.rc == 0
   retries: 20
