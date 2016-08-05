@@ -10,31 +10,31 @@
     - debug: msg="{{ num_dbsrvs }}"
 
 - name: Install DB-Server
-  hosts: tag_name_dbsrv
+  hosts: tag_group_dbsrv
 
   roles:
     - { role: ticketmonster-dbsrv, when: num_dbsrvs > 0 } 
 
 - name: Install JBoss
-  hosts: tag_name_appsrv
+  hosts: tag_group_appsrv
 
   roles:
     - { role: ticketmonster-appsrv, when: num_appsrvs > 0 }
 
 - name: Install Ticketmonster
-  hosts: tag_name_devclt
+  hosts: tag_group_devclt
 
   roles:
     - { role: ticketmonster-devclt, when: num_devclts > 0 }
 
 - name: Install JMeter Client
-  hosts: tag_name_jmeterclt
+  hosts: tag_group_jmeterclt
 
   roles:
     - { role: ticketmonster-jmeterclt, when: num_jmeterclts > 0 }
 
 - name: Install CheckMK Server
-  hosts: tag_name_checkmksrv
+  hosts: tag_group_checkmksrv
 
   roles:
     - { role: ticketmonster-checkmksrv, when: num_checkmksrvs > 0 }

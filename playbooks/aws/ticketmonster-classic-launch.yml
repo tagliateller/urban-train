@@ -25,6 +25,13 @@
       instances: "{{ appsrv_names }}"     
     when: num_appsrvs > 0 
 
+  # dev-clt
+  - include: ../ticketmonster-classic/set_devclt_launch_facts.yml
+  - include: tasks/launch_instances.yml
+    vars:
+      instances: "{{ devclt_names }}"
+    when: num_devclts > 0
+
   # checkmk-server
   - include: ../ticketmonster-classic/set_checkmksrv_launch_facts.yml
   - include: tasks/launch_instances.yml
