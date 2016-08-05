@@ -4,7 +4,7 @@
 - name: Provision a set of instances
   ec2:
     group: oo-security-group
-    key_name: my-key-pair
+    key_name: acer_controller_box
     instance_type: t2.micro
     image: "ami-6d1c2007"
     wait: true

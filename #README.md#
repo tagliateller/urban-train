@@ -52,9 +52,8 @@ h.yml -u ec2-user --ask-vault
 
 -e "num_dbsrvs=1" usw. sollte gehen
 
-$ ansible-playbook -e "num_dbsrvs=1 num_appsrvs=1 num_checkmksrvs=1 num_jmeterclts=1 num_devctls=1 cluster_id=tm1" -i ../openshift-ansible/inventory/aws/hosts/e
+$ ansible-playbook -e "num_dbsrvs=1 num_appsrvs=1 num_checkmksrvs=1 num_jmeterclts=1 cluster_id=tm1" -i ../openshift-ansible/inventory/aws/hosts/e
 c2.py playbooks/aws/ticketmonster-classic-launch.yml -u ec2-user --ask-vault
-
 
 ## Monitoring
 
@@ -72,12 +71,6 @@ mvn jboss-as:deploy -Djboss-as.hostname=104.197.166.59
 oder mit Nutzername / Pwd ?
 $ mvn jboss-as:deploy -Djboss-as.hostname=104.197.166.59 -Djboss-as.username=remote -Djboss-as.password=john - OK
 clean package vorweg !
-
-TASK [ticketmonster-appsrv : add remote user] **********************************
-fatal: [52.90.170.138]: FAILED! => {"changed": true, "cmd": ["bin/add-user.sh", "john", "remote"], "delta": "0:00:00.400656", "end": "2016-08-05 16:11:19.020783", "failed": true, "rc": 1, "start": "2016-08-05 16:11:18.620127", "stderr": "Exception in thread \"main\" java.lang.IllegalStateException: JBAS015232: No java.io.Console available to interact with user.\n\tat org.jboss.as.domain.management.security.AddPropertiesUser.<init>(AddPropertiesUser.java:100)\n\tat org.jboss.as.domain.management.security.AddPropertiesUser.<init>(AddPropertiesUser.java:111)\n\tat org.jboss.as.domain.management.security.AddPropertiesUser.main(AddPropertiesUser.java:155)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.lang.reflect.Method.invoke(Method.java:606)\n\tat org.jboss.modules.Module.run(Module.java:260)\n\tat org.jboss.modules.Main.main(Main.java:291)", "stdout": "", "stdout_lines": [], "warnings": []}
-
-In the same breadth, the --silent=true option in add-user.sh does not work anymore. Again has to do with the need for "theConsole" object being null.
---> ggf. true weglassen
 
 ## MariaDB
 
