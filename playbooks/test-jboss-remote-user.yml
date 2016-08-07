@@ -1,0 +1,11 @@
+---
+
+- name: test add remote user to jboss
+  hosts: tag_group_appsrv
+
+  tasks:
+
+    - name: add remote user
+      command: chdir=/usr/share/jboss-as bin/add-user.sh john remote
+      become: yes
+      become_user: root

@@ -15,9 +15,7 @@
         to_port: 22
         cidr_ip: "{{ myip.stdout }}/32"
     rules_egress:
-      - proto: tcp
-        from_port: 0-65535
-        to_port: 0-65535
+      - proto: all
         cidr_ip: 0.0.0.0/0
 
 # VM deployen
