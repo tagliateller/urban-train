@@ -1,5 +1,6 @@
 ---
-# (ami-6d1c2007) centos 7
+# (ami-6d1c2007) centos 7 - us-east-1
+# (ami-af4333cf) centos 8 - us-west-1
 
 # Anlage der Security Group
 - name: example ec2 group
@@ -13,6 +14,11 @@
         from_port: 22
         to_port: 22
         cidr_ip: "{{ myip.stdout }}/32"
+    rules_egress:
+      - proto: tcp
+        from_port: 0-65535
+        to_port: 0-65535
+        cidr_ip: 0.0.0.0/0
 
 # VM deployen
 - name: Provision a set of instances
@@ -20,7 +26,7 @@
     group: tm-security-group
     key_name: acer_controller_box
     instance_type: t2.micro
-    image: "ami-6d1c2007"
+    image: "ami-af4333cf"
     wait: true
     region: "us-west-1"
     count: "{{ instances | length }}"
