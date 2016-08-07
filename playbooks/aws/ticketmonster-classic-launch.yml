@@ -11,6 +11,14 @@
   
   tasks:
 
+  # Ermittlung der eigenen IP
+  - name: checkmyip
+    command: curl http://checkip.amazonaws.com/
+    register: myip
+
+  - name: debug myip
+    debug: var=myip.stdout
+
   # mariadb-server
   - include: ../ticketmonster-classic/set_dbsrv_launch_facts.yml
   - include: tasks/launch_instances.yml

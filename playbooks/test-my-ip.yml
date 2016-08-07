@@ -1,0 +1,18 @@
+---
+- name: Launch instance(s)
+  hosts: localhost
+  strategy: debug
+  connection: local
+  become: no
+  gather_facts: no
+
+  tasks:
+
+  # Ermittlung der eigenen IP
+  - name: checkmyip
+    command: curl http://checkip.amazonaws.com/
+    register: myip
+
+  - name: debug myip
+    debug: var=myip.stdout
+

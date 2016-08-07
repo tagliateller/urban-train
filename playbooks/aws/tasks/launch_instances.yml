@@ -1,21 +1,35 @@
 ---
 # (ami-6d1c2007) centos 7
 
+# Anlage der Security Group
+- name: example ec2 group
+  ec2_group:
+    name: tm-security-group
+    description: Group for TicketMonster Example
+#    vpc_id: 12345
+    region: "us-west-1"
+    rules:
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: "{{ myip.stdout }}/32"
+
+# VM deployen
 - name: Provision a set of instances
   ec2:
-    group: oo-security-group
+    group: tm-security-group
     key_name: acer_controller_box
     instance_type: t2.micro
     image: "ami-6d1c2007"
     wait: true
-    region: "us-east-1"
+    region: "us-west-1"
     count: "{{ instances | length }}"
     instance_tags:
       group: "{{ instance_type }}"
   register: ec2
 
 - name: add Name tag to instances
-  ec2_tag: resource={{ item.1.id }} region="us-east-1" state=present
+  ec2_tag: resource={{ item.1.id }} region="us-west-1" state=present
   with_together:
     - instances
     - ec2.instances
