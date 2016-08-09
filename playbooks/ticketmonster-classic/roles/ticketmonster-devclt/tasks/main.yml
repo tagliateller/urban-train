@@ -5,6 +5,7 @@
   become_user: root
   with_items:
     - java-1.7.0-openjdk-devel
+    - git
 
 - name: download maven
   get_url: url=http://apache.openmirror.de/maven/maven-3/{{ maven_version }}/binaries/{{ maven_distr_filename }} dest=/home/{{ ansible_user }}
