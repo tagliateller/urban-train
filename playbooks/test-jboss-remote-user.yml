@@ -6,6 +6,6 @@
   tasks:
 
     - name: add remote user
-      command: chdir=/usr/share/jboss-as bin/add-user.sh john remote
+      command: chdir=/usr/share/jboss-as bin/add-user.sh --silent=true john remote
       become: yes
       become_user: root
