@@ -1,0 +1,11 @@
+---
+
+- name: test add remote user to jboss
+  hosts: localhost
+  connection: local
+
+  tasks:
+
+    - name: debug appsrv address
+      debug: msg="{{ hostvars.groups }}"
+
