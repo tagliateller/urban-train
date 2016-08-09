@@ -25,7 +25,7 @@
   hosts: tag_group_devclt
 
   roles:
-    - { role: ticketmonster-devclt, when: num_devctls > 0 }
+    - { role: ticketmonster-devclt, when: num_devclts > 0 }
 
 - name: Install JMeter Client
   hosts: tag_group_jmeterclt
