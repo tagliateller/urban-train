@@ -1,0 +1,25 @@
+---
+
+- name: Install Java 1.7 and some basic dependencies
+  yum: name={{item}} state=present
+  become: yes
+  become_user: root
+  with_items:
+   - java-1.7.0-openjdk
+   - unzip
+
+- name: Download JBoss from jboss.org
+  get_url: url=http://ftp-stud.hs-esslingen.de/pub/Mirrors/ftp.apache.org/dist//jmeter/binaries/apache-jmeter-3.0.zip dest=/opt/apache-jmeter-3.0.zip
+  become: yes
+  become_user: root
+
+- name: Extract archive
+  unarchive: src=/opt/apache-jmeter-3.0.zip dest=/usr/share/ copy=no creates=/usr/share/jmeter
+  become: yes
+
+  # Rename the dir to avoid encoding the version in the init script
+- name: Rename install directory
+  command: chdir=/usr/share /bin/mv apache-jmeter-3.0 jboss-as creates=/usr/share/apache-jmeter
+  become: yes
+  become_user: root
+
