@@ -22,7 +22,7 @@
 - name: Provision a set of instances
   ec2:
     group: tm-security-group
-    key_name: acer_controller_box
+    key_name: "{{ ssh_key_name }}"
     instance_type: t2.micro
     image: "ami-af4333cf"
     wait: true

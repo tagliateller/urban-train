@@ -62,4 +62,6 @@
   git: repo=https://github.com/jboss-developer/ticket-monster.git dest="/home/{{ ansible_user}}/workspace/ticket-monster"
 
 - name: compile and push to jboss
-  command: chdir="/home/{{ ansible_user }}/workspace/ticket-monster/demo" mvn clean package jboss-as:deploy -Djboss-as.hostname=104.197.87.145 -Djboss-as.username=john -Djboss-as.password=remote
+  command: chdir="/home/{{ ansible_user }}/workspace/ticket-monster/demo" mvn clean package jboss-as:deploy -Djboss-as.hostname={{ item }} -Djboss-as.username=john -Djboss-as.password=remote
+  with_items:
+    - "{{ groups['tag_group_appsrv'] }}"

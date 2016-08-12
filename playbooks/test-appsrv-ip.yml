@@ -7,5 +7,5 @@
   tasks:
 
     - name: debug appsrv address
-      debug: msg="{{ hostvars.groups }}"
+      debug: msg="{{ groups['tag_group_appsrv'] }}"
 
