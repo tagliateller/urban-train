@@ -52,7 +52,7 @@ h.yml -u ec2-user --ask-vault
 
 -e "num_dbsrvs=1" usw. sollte gehen
 
-$ ansible-playbook -e "num_dbsrvs=1 num_appsrvs=1 num_checkmksrvs=1 num_jmeterclts=1 num_devclts=1 cluster_id=tm1" -i ../openshift-ansible/inventory/aws/hosts/ec2.py playbooks/aws/ticketmonster-classic-launch.yml -u centos --ask-vault
+$ ansible-playbook -e "num_dbsrvs=1 num_appsrvs=1 num_checkmksrvs=1 num_jmeterclts=1 num_devclts=1 cluster_id=tm1 ssh_key_name=acer_controller_box" -i ../openshift-ansible/inventory/aws/hosts/ec2.py playbooks/aws/ticketmonster-classic-launch.yml -u centos --ask-vault
 
 TODO: Wie kann im Playbook die Adresse des App-Servers ermittelt werden ? test-appsrv ...
 
