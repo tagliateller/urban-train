@@ -23,3 +23,8 @@
   become: yes
   become_user: root
 
+- name: Kopieren der jmx-Dateien mit Einsetzen der URL des JBoss
+  TODO
+  
+- name: Ausführen des Tests - dies später separat
+  TODO
