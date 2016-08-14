@@ -26,10 +26,10 @@
   TODO
   
 - name: Kopieren der jmx-Dateien mit Einsetzen der URL des JBoss
-  template: src=query_events.jmx dest=/usr/share/apache-jmeter/tests
+  template: src=query_events.jmx.j2 dest=/usr/share/apache-jmeter/tests
 
 - name: Kopieren der jmx-Dateien mit Einsetzen der URL des JBoss
-  template: src=book_tickets.jmx dest=/usr/share/apache-jmeter/tests
+  template: src=book_tickets.jmx.j2 dest=/usr/share/apache-jmeter/tests
 
 #- name: Ausführen des Tests - dies später separat
 #  TODO
