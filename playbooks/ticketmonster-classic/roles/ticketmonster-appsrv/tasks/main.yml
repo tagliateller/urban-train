@@ -30,6 +30,11 @@
   become: yes
   become_user: root
 
+#- name: compile and push to jboss
+#  command: chdir="/home/{{ ansible_user }}/workspace/ticket-monster/demo" mvn clean package jboss-as:deploy -Djboss-as.hostname={{ item }} -Djboss-as.username=john -Djboss-as.password=remote
+#  with_items:
+#- "{{ groups['tag_group_appsrv'] }}"
+
 - name: Copying standalone.xml configuration file
   template: src=standalone.xml dest=/usr/share/jboss-as/standalone/configuration/
   become: yes
