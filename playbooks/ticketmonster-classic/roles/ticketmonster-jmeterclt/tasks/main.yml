@@ -16,7 +16,8 @@
 - name: Extract archive
   unarchive: src=/opt/apache-jmeter-3.0.zip dest=/usr/share/ copy=no creates=/usr/share/jmeter
   become: yes
-
+  become_user: root
+ 
 - name: Rename install directory
   command: chdir=/usr/share /bin/mv apache-jmeter-3.0 jboss-as creates=/usr/share/apache-jmeter
   become: yes
