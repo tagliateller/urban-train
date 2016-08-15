@@ -38,6 +38,8 @@
 
 - name: create omd
   command: omd create mysite
+  become: yes
+  become_user: root
 
 - name: start omd
   command: omd start mysite
@@ -48,8 +50,10 @@
 #  with_items: "{{ omdistro_site_config }}"
 #  notify: restart omd
 
-#- name: start omd
-#  service: name=omd state=started enabled=yes
+- name: create omd service 
+  service: name=omd state=started enabled=yes
+  become: yes
+  become_user: root
 
 #- name: template thruk menu_local.conf to add wato
 #  template: >-
