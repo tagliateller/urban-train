@@ -34,7 +34,7 @@
   register: result
 
 - fail: msg="OMD Ausgabe hat nicht den erwarteten Wert"
-  when: result.stdout != 'OMD - Open Monitoring Distribution Version 1.2.8p5'
+  when: result.stdout != 'OMD - Open Monitoring Distribution Version 1.2.8p5.cre'
 
 - name: create omd
   command: omd create mysite
