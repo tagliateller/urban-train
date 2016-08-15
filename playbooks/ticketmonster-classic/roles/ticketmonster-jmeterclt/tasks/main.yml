@@ -13,13 +13,25 @@
   become: yes
   become_user: root
 
+- name: Create Dir
+  command: mkdir -p /usr/share/
+  become: yes
+  become_user: root
+ 
 - name: Extract archive
-  unarchive: src=/opt/apache-jmeter-3.0.zip dest=/usr/share/ copy=no creates=/usr/share/jmeter
+#  unarchive: src=/opt/apache-jmeter-3.0.zip dest=/usr/share/ copy=no creates=/usr/share/jmeter
+# unarchive kann nicht mit Leerzeichen in Dateinamen umgehen
+  command: unzip -o /opt/apache-jmeter-3.0.zip -d /usr/share
   become: yes
   become_user: root
  
 - name: Rename install directory
-  command: chdir=/usr/share /bin/mv apache-jmeter-3.0 jboss-as creates=/usr/share/apache-jmeter
+  command: chdir=/usr/share /bin/mv apache-jmeter-3.0 jmeter
+  become: yes
+  become_user: root
+
+- name: chown 
+  command: chown {{ ansible_ssh_user }}:users /usr/share/jmeter/
   become: yes
   become_user: root
 
@@ -27,10 +39,10 @@
 #  TODO
   
 - name: Kopieren der jmx-Dateien für query events tests
-  template: src=query_events.jmx.j2 dest=/usr/share/apache-jmeter/tests
+  template: src=query_events.jmx.j2 dest=/usr/share/jmeter/tests
 
 - name: Kopieren der jmx-Dateien für book tickets tests
-  template: src=book_tickets.jmx.j2 dest=/usr/share/apache-jmeter/tests
+  template: src=book_tickets.jmx.j2 dest=/usr/share/jmeter/tests
 
 #- name: Ausführen des Tests - dies später separat
 #  TODO

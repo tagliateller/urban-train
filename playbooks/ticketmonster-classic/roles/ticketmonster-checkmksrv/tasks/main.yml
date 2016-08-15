@@ -1,7 +1,7 @@
 ---
 
 - name: install fedora repo
-  yum: name=https://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-7.noarch.rpm state=present
+  yum: name=https://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-8.noarch.rpm state=present
   become: yes
   become_user: root
 
@@ -14,6 +14,8 @@
 - name: download checkmk
 # get_url: src=https://mathias-kettner.de/support/1.2.8p5/check-mk-raw-1.2.8p5-el7-36.x86_64.rpm dest=/tmp
   yum: name=https://mathias-kettner.de/support/1.2.8p5/check-mk-raw-1.2.8p5-el7-36.x86_64.rpm state=present
+  become: yes
+  become_user: root
 
   #yum localinstall --nogpgcheck omd-1.2.4p2.mmk-rh65-32.x86_64.rpm
 

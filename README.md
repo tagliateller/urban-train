@@ -56,6 +56,8 @@ $ ansible-playbook -e "num_dbsrvs=1 num_appsrvs=1 num_checkmksrvs=1 num_jmetercl
 
 TODO: Wie kann im Playbook die Adresse des App-Servers ermittelt werden ? test-appsrv ...
 
+fatal: [54.153.89.195]: FAILED! => {"changed": false, "failed": true, "msg": "path /usr/share/apache-jmeter-3.0/bin/report-template/sbadmin2-1.0.7/bower_components/datatables/media/images/Sorting icons.psd does not exist", "path": "/usr/share/apache-jmeter-3.0/bin/report-template/sbadmin2-1.0.7/bower_components/datatables/media/images/Sorting icons.psd", "stat": {"exists": false}, "state": "absent"}
+
 ## Monitoring
 
 TODO
