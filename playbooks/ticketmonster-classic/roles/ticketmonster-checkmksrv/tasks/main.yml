@@ -10,6 +10,15 @@
   become: yes
   become_user: root
 
+- name: install related packages
+  yum: name={{ item }} state=installed enablerepo=epel
+  become: yes
+  become_user: root
+  with_items:
+    - libmcrypt
+    - fping
+    - perl-Net-SNMP
+    
   # https://mathias-kettner.de/support/1.2.8p5/check-mk-raw-1.2.8p5-el7-36.x86_64.rpm
 - name: download checkmk
 # get_url: src=https://mathias-kettner.de/support/1.2.8p5/check-mk-raw-1.2.8p5-el7-36.x86_64.rpm dest=/tmp
