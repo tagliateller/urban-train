@@ -31,11 +31,11 @@
   hosts: tag_group_jmeterclt
 
   roles:
-    - { role: ticketmonster-jmeterclt, when: num_jmeterclts > 0 }
+    - { role: ticketmonster-jmeterclt }
 
 - name: Install CheckMK Server
   hosts: tag_group_checkmksrv
 
   roles:
-    - { role: ticketmonster-checkmksrv, when: num_checkmksrvs > 0 }
+    - { role: ticketmonster-checkmksrv }
 

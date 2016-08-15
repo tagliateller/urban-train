@@ -22,13 +22,13 @@
   become: yes
   become_user: root
 
-- name: Kopieren der jmx-Dateien mit Einsetzen der URL des JBoss
-  TODO
+#- name: Kopieren der jmx-Dateien mit Einsetzen der URL des JBoss
+#  TODO
   
-- name: Kopieren der jmx-Dateien mit Einsetzen der URL des JBoss
+- name: Kopieren der jmx-Dateien für query events tests
   template: src=query_events.jmx.j2 dest=/usr/share/apache-jmeter/tests
 
-- name: Kopieren der jmx-Dateien mit Einsetzen der URL des JBoss
+- name: Kopieren der jmx-Dateien für book tickets tests
   template: src=book_tickets.jmx.j2 dest=/usr/share/apache-jmeter/tests
 
 #- name: Ausführen des Tests - dies später separat
