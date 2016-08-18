@@ -170,6 +170,24 @@ end
 run app
 ```
 
+# JMeter
+
+To run Apache JMeter in NON_GUI mode and generate a report at end :
+Open a command prompt (or Unix shell) and type:
+
+jmeter.bat(Windows)/jmeter.sh(Linux) -n -t test-file [-p property-file] [-l log-file] -e -o [Path to output folder]
+
+Konkreter Test: 
+cd /usr/share/jmeter
+bin/jmeter -n -t tests (tests ist das aktuelle Testfile, ggf. hier mehrere kopieren)
+
+für einen Testlauf wie folgt vorgehen:
+1. Datenbank IP ermitteln
+2. IP der DB in JBoss eintragen (standalone kopieren)
+3. JBoss neu starten
+4. Testfiles kopieren
+5. Test ausführen
+6. Reportfile zurückübertragen
 
 
 
