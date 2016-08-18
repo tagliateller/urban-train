@@ -5,6 +5,9 @@
 # entweder aus dem inventory oder per gcloud mit dem Tag
 #
 
+- name: debug vars
+  debug: var=maria_db_host_ip
+
 - name: Install Java 1.7 and some basic dependencies
   yum: name={{item}} state=present
   become: yes
@@ -30,10 +33,14 @@
   become: yes
   become_user: root
 
-#- name: compile and push to jboss
-#  command: chdir="/home/{{ ansible_user }}/workspace/ticket-monster/demo" mvn clean package jboss-as:deploy -Djboss-as.hostname={{ item }} -Djboss-as.username=john -Djboss-as.password=remote
-#  with_items:
-#- "{{ groups['tag_group_appsrv'] }}"
+#- name: set ip from mariadb host
+#  set_fact: maria_db_host_ip = "{{ groups['tag_group_dbsrv'] }}"
+
+#- name: debug group
+#  debug: msg="{{ groups['tag_group_dbsrv'] }}"
+
+#- name: debug maria_db_host_ip
+#  debug: msg="{{ maria_db_host_ip }}"
 
 - name: Copying standalone.xml configuration file
   template: src=standalone.xml dest=/usr/share/jboss-as/standalone/configuration/

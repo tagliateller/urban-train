@@ -4,7 +4,7 @@
   hosts: localhost
   connection: local
   gather_facts: no
- 
+
   tasks:
  
     - debug: msg="{{ num_dbsrvs }}"
@@ -13,19 +13,22 @@
   hosts: tag_group_dbsrv
 
   roles:
-    - { role: ticketmonster-dbsrv, when: num_dbsrvs > 0 } 
+    - { role: ticketmonster-dbsrv } 
 
 - name: Install JBoss
   hosts: tag_group_appsrv
 
+  vars:
+    maria_db_host_ip: "{{ groups['tag_group_dbsrv'][0] }}"
+
   roles:
-    - { role: ticketmonster-appsrv, when: num_appsrvs > 0 }
+    - { role: ticketmonster-appsrv }
 
 - name: Install Ticketmonster
   hosts: tag_group_devclt
 
   roles:
-    - { role: ticketmonster-devclt, when: num_devclts > 0 }
+    - { role: ticketmonster-devclt }
 
 - name: Install JMeter Client
   hosts: tag_group_jmeterclt
