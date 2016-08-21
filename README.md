@@ -58,6 +58,11 @@ TODO: Wie kann im Playbook die Adresse des App-Servers ermittelt werden ? test-a
 
 fatal: [54.153.89.195]: FAILED! => {"changed": false, "failed": true, "msg": "path /usr/share/apache-jmeter-3.0/bin/report-template/sbadmin2-1.0.7/bower_components/datatables/media/images/Sorting icons.psd does not exist", "path": "/usr/share/apache-jmeter-3.0/bin/report-template/sbadmin2-1.0.7/bower_components/datatables/media/images/Sorting icons.psd", "stat": {"exists": false}, "state": "absent"}
 
+TODO: Hier muss bei appsrv die DataSource auf die MariaDB-Source umgelenkt werden. AUßerdem fehlt der Treiber für MariaDB !
+[centos@ip-172-31-11-137 demo]$ less target/classes/META-INF/persistence.xml
+[centos@ip-172-31-11-137 demo]$ less target/ticket-monster/WEB-INF/ticket-monster-ds.xml
+
+
 ## Monitoring
 
 TODO
