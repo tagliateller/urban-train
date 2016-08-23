@@ -1,0 +1,14 @@
+---
+
+- name: Kopieren der jmx-Dateien für query events tests
+  template: src=query_events.jmx.j2 dest=/usr/share/jmeter/tests/query_events.jmx
+
+- name: Kopieren der jmx-Dateien für book tickets tests
+  template: src=book_tickets.jmx.j2 dest=/usr/share/jmeter/tests/book_tickets.jmx
+
+- name: Ausführen des Tests
+  command: bin/jmeter
+
+- name: Kopieren der Reportdatei
+  copy: src=/usr/share/jmeter/tests-result.jtl dest=~
+  

@@ -1,0 +1,11 @@
+---
+
+- name: Ausführung des Tests
+  hosts: tag_group_jmeterclt
+
+  vars:
+    tm_host_ip: "{{ groups['tag_group_appsrv'][0] }}"
+
+  roles:
+    - { role: ticketmonster-run-tests }
+
