@@ -4,8 +4,17 @@
   hosts: localhost
   connection: local
 
+  vars:
+    maria_db_host_ip: "{{ groups['tag_group_dbsrv'][0] }}"
+
   tasks:
 
     - name: debug appsrv address
-      debug: msg="{{ groups['tag_group_appsrv'] }}"
+      debug: msg="{{ groups['tag_group_dbsrv'][0] }}"
 
+#    - name: set fact
+#      set_fact: maria_db_host_ip = {{ groups['tag_group_dbsrv'][0] }}
+#      set_fact: maria_db_host_ip = IrgendEinWert
+
+    - name: debug fact
+      debug: var=maria_db_host_ip

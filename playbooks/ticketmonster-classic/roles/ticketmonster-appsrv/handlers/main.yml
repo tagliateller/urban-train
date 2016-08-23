@@ -1,6 +1,11 @@
 ---
 - name: restart jboss 
   service: name=jboss state=restarted
+  become: yes
+  become_user: root
 
 - name: restart iptables
   service: name=iptables state=restarted
+  become: yes
+  become_user: root
+

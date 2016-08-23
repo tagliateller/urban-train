@@ -4,7 +4,7 @@
   hosts: localhost
   connection: local
   gather_facts: no
- 
+
   tasks:
  
     - debug: msg="{{ num_dbsrvs }}"
@@ -17,6 +17,9 @@
 
 - name: Install JBoss
   hosts: tag_group_appsrv
+
+  vars:
+    maria_db_host_ip: "{{ groups['tag_group_dbsrv'][0] }}"
 
   roles:
     - { role: ticketmonster-appsrv }

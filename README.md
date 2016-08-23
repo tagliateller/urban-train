@@ -58,6 +58,11 @@ TODO: Wie kann im Playbook die Adresse des App-Servers ermittelt werden ? test-a
 
 fatal: [54.153.89.195]: FAILED! => {"changed": false, "failed": true, "msg": "path /usr/share/apache-jmeter-3.0/bin/report-template/sbadmin2-1.0.7/bower_components/datatables/media/images/Sorting icons.psd does not exist", "path": "/usr/share/apache-jmeter-3.0/bin/report-template/sbadmin2-1.0.7/bower_components/datatables/media/images/Sorting icons.psd", "stat": {"exists": false}, "state": "absent"}
 
+TODO: Hier muss bei appsrv die DataSource auf die MariaDB-Source umgelenkt werden. AUßerdem fehlt der Treiber für MariaDB !
+[centos@ip-172-31-11-137 demo]$ less target/classes/META-INF/persistence.xml
+[centos@ip-172-31-11-137 demo]$ less target/ticket-monster/WEB-INF/ticket-monster-ds.xml
+
+
 ## Monitoring
 
 TODO
@@ -170,6 +175,24 @@ end
 run app
 ```
 
+# JMeter
+
+To run Apache JMeter in NON_GUI mode and generate a report at end :
+Open a command prompt (or Unix shell) and type:
+
+jmeter.bat(Windows)/jmeter.sh(Linux) -n -t test-file [-p property-file] [-l log-file] -e -o [Path to output folder]
+
+Konkreter Test: 
+cd /usr/share/jmeter
+bin/jmeter -n -t tests (tests ist das aktuelle Testfile, ggf. hier mehrere kopieren)
+
+für einen Testlauf wie folgt vorgehen:
+1. Datenbank IP ermitteln
+2. IP der DB in JBoss eintragen (standalone kopieren)
+3. JBoss neu starten
+4. Testfiles kopieren
+5. Test ausführen
+6. Reportfile zurückübertragen
 
 
 
