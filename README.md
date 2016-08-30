@@ -105,6 +105,8 @@ ansible -i lab-inventory rdo-server.priv.tagliateller.nu -m setup
 
 https://github.com/sfromm/ansible-omdistro.git
 
+Beachte bei Zugriff auf WebUI: http://sysadminsjourney.com/content/2010/02/01/apache-modproxy-error-13permission-denied-error-rhel/
+
 ##Jenkins 
 
 https://github.com/geerlingguy/ansible-role-jenkins.git
