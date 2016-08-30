@@ -86,6 +86,12 @@ fatal: [52.90.170.138]: FAILED! => {"changed": true, "cmd": ["bin/add-user.sh", 
 In the same breadth, the --silent=true option in add-user.sh does not work anymore. Again has to do with the need for "theConsole" object being null.
 --> ggf. true weglassen
 
+Monitoring-Agent nicht vergessen. Das setzt voraus,  dass checkmk bereits installiert ist.
+
+http://ec2-54-153-50-144.us-west-1.compute.amazonaws.com/ticketmonster/check_mk/agents/check-mk-agent-1.2.8p9-1.noarch.rpm
+sudo yum localinstall ...
+
+
 ## MariaDB
 
 TODO: Anbindung an JBoss
