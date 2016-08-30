@@ -113,6 +113,9 @@ https://github.com/sfromm/ansible-omdistro.git
 
 Beachte bei Zugriff auf WebUI: http://sysadminsjourney.com/content/2010/02/01/apache-modproxy-error-13permission-denied-error-rhel/
 
+TODO: Anlegen eines Ordners in "Hosts"
+Host eintragen und service discovery starten
+
 ##Jenkins 
 
 https://github.com/geerlingguy/ansible-role-jenkins.git
