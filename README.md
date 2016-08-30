@@ -91,6 +91,7 @@ Monitoring-Agent nicht vergessen. Das setzt voraus,  dass checkmk bereits instal
 http://ec2-54-153-50-144.us-west-1.compute.amazonaws.com/ticketmonster/check_mk/agents/check-mk-agent-1.2.8p9-1.noarch.rpm
 sudo yum localinstall ...
 
+TODO Security-Group muss 6556 freischalten
 
 ## MariaDB
 
@@ -112,6 +113,8 @@ ansible -i lab-inventory rdo-server.priv.tagliateller.nu -m setup
 https://github.com/sfromm/ansible-omdistro.git
 
 Beachte bei Zugriff auf WebUI: http://sysadminsjourney.com/content/2010/02/01/apache-modproxy-error-13permission-denied-error-rhel/
+
+Security-Group muss 80 freischalten
 
 TODO: Anlegen eines Ordners in "Hosts"
 Host eintragen und service discovery starten
