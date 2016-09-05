@@ -36,11 +36,17 @@
 - fail: msg="OMD Ausgabe hat nicht den erwarteten Wert"
   when: result.stdout != 'OMD - Open Monitoring Distribution Version 1.2.8p5.cre'
 
+# Test ob mysite bereits angelegt wurde
+- name: test mysite
+  command: omd sites -b
+  register: result
+  
 - name: create omd
   command: omd create mysite
   become: yes
   become_user: root
-
+  when: result.stdout != 'mysite'
+  
 - name: start omd
   command: omd start mysite
   become: yes
