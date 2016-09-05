@@ -47,11 +47,18 @@
   become_user: root
   when: result.stdout != 'mysite'
   
+- name: test if omd is running
+  command: omd status -b | grep OVERALL
+  become: yes
+  become_user: root
+  register: result
+  
 - name: start omd
   command: omd start mysite
   become: yes
   become_user: root
-
+  when: result.stdout != 'OVERALL 0'
+  
 #- name: configure omd
 #  command: omd config {{ omdistro_site }} set {{ item.name }} {{ item.value }}
 #  when: omdistro_site_facts[item.name] is defined and omdistro_site_facts[item.name] != item.value
