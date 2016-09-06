@@ -106,21 +106,25 @@ failed: [tm1-dbsrv-7a68b] (item=::1) => {"failed": true, "item": "::1", "msg": "
 
 ### Performance / TPCC
 
+#### AWS CentOS 7 t2.micro
+
 ```bash
-sudo yum install git
-git clone https://github.com/tagliateller/tpcc-mysql.git
-sudo yum install mysql-server mysql mysql-devel mysql-lib
-sudo yum -y groupinstall "Development Tools"
-cd ~/tpcc-mysql/src
-make
-TODO: bis hierhin ok, aber mysql / mariadb lässt sich nicht starten
-TODO: Mix aus yum -y install mariadb-server mariadb
 
 sudo yum -y update
 sudo yum -y install mariadb-server mariadb mariadb-devel mariadb-lib git
-sudo yum systemctl start mariadb
-sudo yum systemctl enable mariadb
-sudo yum systemctl status mariadb
+sudo systemctl start mariadb
+sudo systemctl enable mariadb
+sudo systemctl status mariadb
+
+git clone https://github.com/tagliateller/tpcc-mysql.git
+sudo yum -y groupinstall "Development Tools"
+cd ~/tpcc-mysql/src
+make
+
+sudo mysqladmin create tpcc1000
+cd ..
+sudo mysql tpcc1000 < create_table.sql
+
 ```
 
 ## Facts
