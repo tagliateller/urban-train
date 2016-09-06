@@ -106,6 +106,7 @@ failed: [tm1-dbsrv-7a68b] (item=::1) => {"failed": true, "item": "::1", "msg": "
 
 ### Performance / TPCC
 
+```bash
 sudo yum install git
 git clone https://github.com/tagliateller/tpcc-mysql.git
 sudo yum install mysql-server mysql mysql-devel mysql-lib
@@ -120,7 +121,7 @@ sudo yum -y install mariadb-server mariadb mariadb-devel mariadb-lib git
 sudo yum systemctl start mariadb
 sudo yum systemctl enable mariadb
 sudo yum systemctl status mariadb
-
+```
 
 ## Facts
 
