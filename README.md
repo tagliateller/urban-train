@@ -124,7 +124,7 @@ make
 sudo mysqladmin create tpcc1000
 cd ..
 sudo mysql tpcc1000 < create_table.sql
-
+./tpcc_load -h 127.0.0.1 -d tpcc1000 -u root -p "" -w 1000
 ```
 
 ## Facts
