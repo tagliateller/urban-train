@@ -18,5 +18,5 @@
     maria_db_host_ip: "{{ groups['tag_group_mariadbsrv'][0] }}"
 
   roles:
-    - { role: mariadb-perftest-client }
+    - { role: mariadb-perftest-dbclient }
 
