@@ -1,16 +1,16 @@
 ---
-- set_fact: instance_type="dbsrv"
+- set_fact: instance_type="dbclient"
 
-- name: generate dbsrv instance names(s)
+- name: generate dbclient instance names(s)
   set_fact:
     scratch_name: "{{ cluster_id }}-{{ instance_type }}-{{ '%05x' | format(1048576 | random) }}"
-  register: dbsrv_names_output
-  with_sequence: count={{ num_dbsrvs }}
+  register: dbclient_names_output
+  with_sequence: count={{ num_dbclients }}
 
 - set_fact:
-    dbsrv_names: "{{ dbsrv_names_output.results | default([])
+    dbsrv_names: "{{ dbclient_names_output.results | default([])
                       | paas_collect('ansible_facts')
                       | paas_collect('scratch_name') }}"
 
-- name: debug dbsrv names
-  debug: msg="{{ dbsrv_names }}"
+- name: debug dbclient names
+  debug: msg="{{ dbclient_names }}"
