@@ -1,25 +1,24 @@
 ---
 
-- name: debug
-  debug: msg="{{ num_dbsrvs }}"
+###- name: debug
+###  debug: msg="{{ num_dbsrvs }}"
 
-- name: Add repo file
-  template: src=mariadb_centos.repo.j2 dest=/etc/yum.repos.d/mariadb.repo owner=root group=root mode=0644
-  become: True
-  become_user: root
+###- name: Add repo file
+###  template: src=mariadb_centos.repo.j2 dest=/etc/yum.repos.d/mariadb.repo owner=root group=root mode=0644
+###  become: True
+###  become_user: root
 
-- name: Install MariaDB
-  yum: name={{ item }} enablerepo=mariadb state=present
-  become: True
-  become_user: root
-  with_items:
-    - MariaDB-server
-    - MariaDB-client
+###- name: Install MariaDB
+###  yum: name={{ item }} enablerepo=mariadb state=present
+###  become: True
+###  become_user: root
+###  with_items:
+###    - MariaDB-server
 
-- name: Install MySQLdb Python package for secure installations.
-  yum: name=MySQL-python state=present
-  become: True
-  become_user: root
+#- name: Install MySQLdb Python package for secure installations.
+#  yum: name=MySQL-python state=present
+#  become: True
+#  become_user: root
 #  when: mysql_secure_installation and mysql_root_password is defined
 
 #- name: Add configuration
@@ -29,10 +28,10 @@
 #  become_user: root
 #  notify: restart mysql
 
-- name: Start and enable service
-  become: True
-  become_user: root
-  service: name=mysql state=started enabled=yes
+###- name: Start and enable service
+###  become: True
+###  become_user: root
+###  service: name=mysql state=started enabled=yes
 
 # Set root password
 # UPDATE mysql.user SET Password=PASSWORD('mysecret') WHERE User='root';
@@ -80,10 +79,10 @@
 #    - FLUSH PRIVILEGES
 #  changed_when: False
   
-- name: Anlage einer Datenbank für Ticketmonster
+###- name: Anlage einer Datenbank für TPCC
 #  mysql_db: name=ticketmonster state=present login_user=root login_password={{ mysql_root_password }}
-  mysql_db: name=ticketmonster state=present login_user=root
+###  mysql_db: name=tpcc state=present login_user=root
 
-- name: Anlage Nutzer 
+#- name: Anlage Nutzer 
 #  mysql_user: name=ticketmonster password=ticketmonster priv=*.*:ALL state=present login_user=root login_password={{ mysql_root_password }}
-  mysql_user: name=ticketmonster password=ticketmonster priv=*.*:ALL state=present login_user=root
+#  mysql_user: name=ticketmonster password=ticketmonster priv=*.*:ALL state=present login_user=root
