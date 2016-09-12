@@ -18,14 +18,14 @@
 
   # mariadb-server
   - include: ../mariadb-performance-test/set_dbsrv_launch_facts.yml
-  - include: tasks/launch_instances.yml
+  - include: tasks/mariadb_perftest_launch_instances.yml
     vars:
       instances: "{{ dbsrv_names }}"
     when: num_dbsrvs > 0
 
   # jboss-server
   - include: ../mariadb-performance-test/set_dbsrv_launch_facts.yml
-  - include: tasks/launch_instances.yml
+  - include: tasks/mariadb_perftest_launch_instances.yml
     vars:
       instances: "{{ dbclient_names }}"     
     when: num_dbclients > 0 
