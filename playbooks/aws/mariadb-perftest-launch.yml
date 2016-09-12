@@ -30,4 +30,4 @@
       instances: "{{ dbclient_names }}"     
     when: num_dbclients > 0 
 
-- include: ../mariadb-performance-tests/install.yml
+- include: ../mariadb-performance-test/install.yml
