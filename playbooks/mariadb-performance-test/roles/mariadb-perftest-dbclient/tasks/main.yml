@@ -13,8 +13,10 @@
   become: True
   become_user: root
   with_items:
-    - MariaDB-server
+#    - MariaDB-server
     - MariaDB-client
+    - MariaDB-lib
+    - MariaDB-devel
 
 - name: Install MySQLdb Python package for secure installations.
   yum: name=MySQL-python state=present
@@ -29,10 +31,10 @@
 #  become_user: root
 #  notify: restart mysql
 
-- name: Start and enable service
-  become: True
-  become_user: root
-  service: name=mysql state=started enabled=yes
+#- name: Start and enable service
+#  become: True
+#  become_user: root
+#  service: name=mysql state=started enabled=yes
 
 # Set root password
 # UPDATE mysql.user SET Password=PASSWORD('mysecret') WHERE User='root';
@@ -87,3 +89,29 @@
 #- name: Anlage Nutzer 
 #  mysql_user: name=ticketmonster password=ticketmonster priv=*.*:ALL state=present login_user=root login_password={{ mysql_root_password }}
 #  mysql_user: name=ticketmonster password=ticketmonster priv=*.*:ALL state=present login_user=root
+
+- name: Install other Packages
+  yum: name={{ item }} state=present
+  become: True
+  become_user: root
+  with_items:
+    - git
+    
+- name: Clone git repo
+  command: chdir=~ git clone https://github.com/tagliateller/tpcc-mysql.git
+  
+- name: install dev tools
+  yum: name="@Development tools" state=present
+
+- name: build
+  command:  chdir=~/tpcc-mysql/src make
+  
+#- name: create db
+#  command: mysqladmin create tpcc1000
+  
+#- name: create volume from snapshot
+#  
+#- name: restore db#
+#
+#- delete volume
+
