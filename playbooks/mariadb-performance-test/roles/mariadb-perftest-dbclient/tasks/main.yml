@@ -1,7 +1,7 @@
 ---
 
 - name: debug
-  debug: msg="{{ num_dbsrvs }}"
+  debug: msg="{{ num_dbclients }}"
 
 - name: Add repo file
   template: src=mariadb_centos.repo.j2 dest=/etc/yum.repos.d/mariadb.repo owner=root group=root mode=0644
@@ -80,10 +80,10 @@
 #    - FLUSH PRIVILEGES
 #  changed_when: False
   
-- name: Anlage einer Datenbank für Ticketmonster
-#  mysql_db: name=ticketmonster state=present login_user=root login_password={{ mysql_root_password }}
-  mysql_db: name=ticketmonster state=present login_user=root
+#- name: Anlage einer Datenbank für Ticketmonster
+##  mysql_db: name=ticketmonster state=present login_user=root login_password={{ mysql_root_password }}
+#  mysql_db: name=ticketmonster state=present login_user=root
 
-- name: Anlage Nutzer 
+#- name: Anlage Nutzer 
 #  mysql_user: name=ticketmonster password=ticketmonster priv=*.*:ALL state=present login_user=root login_password={{ mysql_root_password }}
-  mysql_user: name=ticketmonster password=ticketmonster priv=*.*:ALL state=present login_user=root
+#  mysql_user: name=ticketmonster password=ticketmonster priv=*.*:ALL state=present login_user=root
