@@ -17,38 +17,17 @@
     debug: var=myip.stdout
 
   # mariadb-server
-  - include: ../mariadb-perftest-classic/set_dbsrv_launch_facts.yml
+  - include: ../mariadb-performance-tests/set_dbsrv_launch_facts.yml
   - include: tasks/launch_instances.yml
     vars:
       instances: "{{ dbsrv_names }}"
     when: num_dbsrvs > 0
 
   # jboss-server
-  - include: ../ticketmonster-classic/set_appsrv_launch_facts.yml
+  - include: ../mariadb-performance-tests/set_dbsrv_launch_facts.yml
   - include: tasks/launch_instances.yml
     vars:
-      instances: "{{ appsrv_names }}"     
-    when: num_appsrvs > 0 
+      instances: "{{ dbclient_names }}"     
+    when: num_dbclients > 0 
 
-  # dev-clt
-  - include: ../ticketmonster-classic/set_devclt_launch_facts.yml
-  - include: tasks/launch_instances.yml
-    vars:
-      instances: "{{ devclt_names }}"
-    when: num_devclts > 0
-
-  # checkmk-server
-  - include: ../ticketmonster-classic/set_checkmksrv_launch_facts.yml
-  - include: tasks/launch_instances.yml
-    vars:
-      instances: "{{ checkmksrv_names }}"
-    when: num_checkmksrvs > 0
-
-  # jmeter-client
-  - include: ../ticketmonster-classic/set_jmeterclt_launch_facts.yml
-  - include: tasks/launch_instances.yml
-    vars:
-      instances: "{{ jmeterclt_names }}"
-    when: num_jmeterclts > 0
-
-- include: ../ticketmonster-classic/install.yml
+- include: ../mariadb-performance-tests/install.yml
