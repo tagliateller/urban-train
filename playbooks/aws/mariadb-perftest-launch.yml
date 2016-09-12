@@ -6,9 +6,6 @@
   become: no
   gather_facts: no
 
-#  vars_files:
-#    - ticketmonster-vars.yml
-  
   tasks:
 
   # Ermittlung der eigenen IP
@@ -20,7 +17,7 @@
     debug: var=myip.stdout
 
   # mariadb-server
-  - include: ../ticketmonster-classic/set_dbsrv_launch_facts.yml
+  - include: ../mariadb-perftest-classic/set_dbsrv_launch_facts.yml
   - include: tasks/launch_instances.yml
     vars:
       instances: "{{ dbsrv_names }}"
