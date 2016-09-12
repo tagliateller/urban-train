@@ -5,40 +5,18 @@
   connection: local
   gather_facts: no
 
-  tasks:
- 
-    - debug: msg="{{ num_dbsrvs }}"
-
 - name: Install DB-Server
-  hosts: tag_group_dbsrv
+  hosts: tag_group_mariadbsrv
 
   roles:
-    - { role: ticketmonster-dbsrv } 
+    - { role: mariadb-perftest-dbsrv } 
 
-- name: Install JBoss
-  hosts: tag_group_appsrv
+- name: Install DB-Client
+  hosts: tag_group_mariadbclient
 
   vars:
-    maria_db_host_ip: "{{ groups['tag_group_dbsrv'][0] }}"
+    maria_db_host_ip: "{{ groups['tag_group_mariadbsrv'][0] }}"
 
   roles:
-    - { role: ticketmonster-appsrv }
-
-- name: Install Ticketmonster
-  hosts: tag_group_devclt
-
-  roles:
-    - { role: ticketmonster-devclt }
-
-- name: Install JMeter Client
-  hosts: tag_group_jmeterclt
-
-  roles:
-    - { role: ticketmonster-jmeterclt }
-
-- name: Install CheckMK Server
-  hosts: tag_group_checkmksrv
-
-  roles:
-    - { role: ticketmonster-checkmksrv }
+    - { role: mariadb-perftest-client }
 
