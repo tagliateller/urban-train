@@ -24,7 +24,7 @@
     when: num_dbsrvs > 0
 
   # jboss-server
-  - include: ../mariadb-performance-test/set_dbsrv_launch_facts.yml
+  - include: ../mariadb-performance-test/set_dbclient_launch_facts.yml
   - include: tasks/mariadb_perftest_launch_instances.yml
     vars:
       instances: "{{ dbclient_names }}"     
