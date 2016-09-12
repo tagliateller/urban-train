@@ -17,14 +17,14 @@
     debug: var=myip.stdout
 
   # mariadb-server
-  - include: ../mariadb-performance-tests/set_dbsrv_launch_facts.yml
+  - include: ../mariadb-performance-test/set_dbsrv_launch_facts.yml
   - include: tasks/launch_instances.yml
     vars:
       instances: "{{ dbsrv_names }}"
     when: num_dbsrvs > 0
 
   # jboss-server
-  - include: ../mariadb-performance-tests/set_dbsrv_launch_facts.yml
+  - include: ../mariadb-performance-test/set_dbsrv_launch_facts.yml
   - include: tasks/launch_instances.yml
     vars:
       instances: "{{ dbclient_names }}"     
