@@ -52,7 +52,7 @@
       group: "{{ instance_type }}"
   register: ec2
 
-- name: 
+- name: Volume für DB (/var/lib/mysql)
   ec2_vol:
     instance: "{{ item.id }}"
     device_name: /dev/xvdf
@@ -60,11 +60,11 @@
   with_items: ec2.instances
   register: ec2_vol
   
-- name: 
+- name: Volume für Backup (/backup)
   ec2_vol:
     instance: "{{ item.id }}"
     device_name: /dev/xvdm
-    snapshot: der_snapshot_tag
+    snapshot: snap-a2f99a23 # 80 GiB tpcc_backup_ohne_indizes
   with_items: ec2.instances
   register: ec2_vol
 
