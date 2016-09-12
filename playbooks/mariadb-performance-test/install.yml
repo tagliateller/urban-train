@@ -6,10 +6,10 @@
   gather_facts: no
 
 - name: Install DB-Server
-  hosts: tag_group_mariadbserver
+  hosts: tag_group_mariadbsrv
 
   roles:
-    - { role: mariadb-perftest-dbsrv } 
+    - { role: mariadb-perftest-dbserver } 
 
 - name: Install DB-Client
   hosts: tag_group_mariadbclient
