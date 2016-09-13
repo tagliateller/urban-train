@@ -1,4 +1,5 @@
 ---
+
 - name: Launch instance(s)
   hosts: localhost
   strategy: debug
@@ -6,6 +7,15 @@
   become: no
   gather_facts: no
 
+  vars:
+    num_dbsrvs: "{{ lookup('env','num_dbsrvs') }}"
+    num_dbclients: "{{ lookup('env','num_dbclients') }}"
+    ssh_key_name: "{{ lookup('env','ssh_key_name') }}"
+    cluster_id: "{{ lookup('env','cluster_id') }}"
+    aws_region: "{{ lookup('env','aws_region') }}"
+    server_machine_size: "{{ lookup('env','server_machine_size') }}"
+    client_machine_size: "{{ lookup('env','client_machine_size') }}"
+ 
   tasks:
 
   # Ermittlung der eigenen IP

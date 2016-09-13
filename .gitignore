@@ -5,3 +5,4 @@ lab-inventory
 *-inventory
 master-config.yaml
 *.pyc
+mariadb-perftest-env-vars

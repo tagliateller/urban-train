@@ -2,13 +2,16 @@
 # (ami-6d1c2007) centos 7 - us-east-1
 # (ami-af4333cf) centos 8 - us-west-1
 
+- name: debug vars
+  debug: var=aws_region
+
 # Anlage der Security Group (DB-Server)
 - name: ec2 security group server
   ec2_group:
     name: tpcc-security-group-server
     description: Group for TicketMonster Example
 #    vpc_id: 12345
-    region: "us-west-1"
+    region: "{{ aws_region }}"
     rules:
       - proto: tcp
         from_port: 22
@@ -28,7 +31,7 @@
     name: tpcc-security-group-client
     description: Group for TicketMonster Example
 #    vpc_id: 12345
-    region: "us-west-1"
+    region: "{{ aws_region }}"
     rules:
       - proto: tcp
         from_port: 22
@@ -43,10 +46,10 @@
   ec2:
     group: tpcc-security-group-server
     key_name: "{{ ssh_key_name }}"
-    instance_type: t2.micro
+    instance_type: "{{ server_machine_size }}"
     image: "ami-af4333cf"
     wait: true
-    region: "us-west-1"
+    region: "{{ aws_region }}"
     count: "{{ instances | length }}"
     instance_tags:
       group: "{{ instance_type }}"
@@ -69,7 +72,7 @@
   register: ec2_vol
 
 - name: add Name tag to instances
-  ec2_tag: resource={{ item.1.id }} region="us-west-1" state=present
+  ec2_tag: resource={{ item.1.id }} region="{{ aws_region }}" state=present
   with_together:
     - instances
     - ec2.instances
