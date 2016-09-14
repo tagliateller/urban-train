@@ -126,7 +126,24 @@ cd ..
 sudo mysql tpcc1000 < create_table.sql
 ./tpcc_load -h 127.0.0.1 -d tpcc1000 -u root -p "" -w 1000
 ```
+### Einhängen des Volumens und Einspielen Backup
 
+```bash
+[centos@ip-172-31-12-214 ~]$ lsblk
+NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+xvda    202:0    0  250G  0 disk 
+└─xvda1 202:1    0  250G  0 part /
+xvdf    202:80   0   80G  0 disk 
+[centos@ip-172-31-12-214 ~]$ sudo file -s /dev/xvdf
+/dev/xvdf: Linux rev 1.0 ext4 filesystem data, UUID=f9e49a0b-a949-4c7d-acb6-435cd8a8e70d (extents) (64bit) (large files) (huge files)
+[centos@ip-172-31-12-214 ~]$ sudo mkdir /backup
+[centos@ip-172-31-12-214 ~]$ sudo mount /dev/xvdf /backup
+[centos@ip-172-31-12-214 ~]$ ls /backup/
+lost+found  tpcc1000_backup_ohne_indizes.sql
+[centos@ip-172-31-12-214 ~]$ less /backup/tpcc1000_backup_ohne_indizes.sql 
+[centos@ip-172-31-12-214 ~]$ mysql -u root -p -D tpcc1000 < /backup/tpcc1000_backup_ohne_indizes.sql 
+Enter password: 
+```
 ## Facts
 
 ansible -i lab-inventory rdo-server.priv.tagliateller.nu -m setup
