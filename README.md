@@ -144,6 +144,17 @@ lost+found  tpcc1000_backup_ohne_indizes.sql
 [centos@ip-172-31-12-214 ~]$ mysql -u root -p -D tpcc1000 < /backup/tpcc1000_backup_ohne_indizes.sql 
 Enter password: 
 ```
+
+### Anpassung Config-Dateien
+
+TODO
+
+### Ausführung Tests
+
+```bash
+./tpcc_start -h127.0.0.1 -dtpcc1000 -uroot -p -w1000 -c32 -r10 -l10800 > ~/tpcc-output-ps-55-bpool-256.log
+```
+
 ## Facts
 
 ansible -i lab-inventory rdo-server.priv.tagliateller.nu -m setup
