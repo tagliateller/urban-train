@@ -147,7 +147,68 @@ Enter password:
 
 ### Anpassung Config-Dateien
 
-TODO
+```bash
+#
+# These groups are read by MariaDB server.
+# Use it for options that only the server (but not clients) should see
+#
+# See the examples of server my.cnf files in /usr/share/mysql/
+#
+
+# this is read by the standalone daemon and embedded servers
+[server]
+innodb_buffer_pool_size = 768M
+
+# this is only for the mysqld standalone daemon
+[mysqld]
+
+# this is only for embedded server
+[embedded]
+
+# This group is only read by MariaDB-5.5 servers.
+# If you use the same .cnf file for MariaDB of different versions,
+# use this group for options that older servers don't understand
+[mysqld-5.5]
+
+# These two groups are only read by MariaDB servers, not by MySQL.
+# If you use the same .cnf file for MySQL and MariaDB,
+# you can put MariaDB-only options here
+[mariadb]
+
+[mariadb-5.5]
+```
+
+```bash
+sudo systemctl restart mariadb
+sudo systemctl status mariadb
+```
+
+### Einrichtung Remote-User
+
+```bash
+[centos@ip-172-31-12-214 ~]$ mysql -u root -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 5
+Server version: 5.5.50-MariaDB MariaDB Server
+
+Copyright (c) 2000, 2016, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create user 'XXXXX'@'ip-172-31-2-229.us-west-1.compute.internal' identified by 'XXXXX';
+Query OK, 0 rows affected (0.01 sec)
+
+MariaDB [(none)]> grant all on *.* to 'XXXX'@'ip-172-31-2-229.us-west-1.compute.internal';
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]> Bye
+[centos@ip-172-31-12-214 ~]$ 
+```
+
+### Einrichtung Server SG
+
+Port 3306, Interne IP des Clients
 
 ### Ausführung Tests
 
