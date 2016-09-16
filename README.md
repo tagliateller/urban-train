@@ -216,6 +216,37 @@ Port 3306, Interne IP des Clients
 ./tpcc_start -h127.0.0.1 -dtpcc1000 -uroot -p -w1000 -c32 -r10 -l10800 > ~/tpcc-output-ps-55-bpool-256.log
 ```
 
+### Docker-Variante
+
+* m4.large, 250GB SSD General Purpose
+
+```bash
+sudo yum -y update
+sudo yum -y install docker
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo systemctl status docker
+```
+
+#### Anlage der Custom-Config
+
+sudo yum -y install mariadb-server
+# Ändern der Konfig wie oben
+
+### Start Container
+
+```bash
+sudo docker run --name tpcc-mariadb-4 -v /etc/my.cnf.d:/etc/mysql/conf.d -e MYSQL_ROOT_PASSWORD=berlin1234 -d mariadb:5.5 -p 3306:3306
+```
+
+TODO: Container wird gestartet und sofort beendet
+
+* Anlage der Datenbank
+* Volume für SQL-File einbinden
+* Daten laden
+* Indizes hinzufügen
+* Client starten und Test ausführen
+
 ## Facts
 
 ansible -i lab-inventory rdo-server.priv.tagliateller.nu -m setup
