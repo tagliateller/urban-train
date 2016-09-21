@@ -239,13 +239,59 @@ sudo yum -y install mariadb-server
 sudo docker run --name tpcc-mariadb-4 -v /etc/my.cnf.d:/etc/mysql/conf.d -e MYSQL_ROOT_PASSWORD=berlin1234 -d mariadb:5.5 -p 3306:3306
 ```
 
-TODO: Container wird gestartet und sofort beendet
+TODO: Container wird gestartet und sofort beendet - Fehler:
 
-* Anlage der Datenbank
-* Volume für SQL-File einbinden
-* Daten laden
-* Indizes hinzufügen
-* Client starten und Test ausführen
+```bash
+[centos@ip-172-31-6-123 ~]$ sudo systemctl status docker
+● docker.service - Docker Application Container Engine
+   Loaded: loaded (/usr/lib/systemd/system/docker.service; enabled; vendor preset: disabled)
+   Active: active (running) since Mi 2016-09-21 12:42:33 UTC; 7min ago
+     Docs: http://docs.docker.com
+ Main PID: 29774 (docker-current)
+   Memory: 7.7M
+   CGroup: /system.slice/docker.service
+           └─29774 /usr/bin/docker-current daemon --exec-opt native.cgroupdriver=systemd --selinux-enabled --log-driver=journald
+
+Sep 21 12:47:53 ip-172-31-6-123 docker-current[29774]: time="2016-09-21T12:47:53.384516464Z" level=warning msg="failed to cleanup ipc mounts:\nfailed to umou...irectory"
+Sep 21 12:47:53 ip-172-31-6-123 docker-current[29774]: time="2016-09-21T12:47:53.427250779Z" level=error msg="Handler for POST /v1.22/containers/5392872991d4...ov/mysql"
+Sep 21 12:47:53 ip-172-31-6-123 docker-current[29774]: time="2016-09-21T12:47:53.428185971Z" level=info msg="{Action=remove, ID=5392872991d4763092280af773ba2...D=30191}"
+Sep 21 12:49:53 ip-172-31-6-123 docker-current[29774]: time="2016-09-21T12:49:53.142820988Z" level=info msg="{Action=create, Username=centos, LoginUID=1000, PID=30462}"
+Sep 21 12:49:53 ip-172-31-6-123 docker-current[29774]: time="2016-09-21T12:49:53.146965863Z" level=error msg="Handler for POST /v1.22/containers/create returned error...
+Sep 21 12:50:06 ip-172-31-6-123 docker-current[29774]: time="2016-09-21T12:50:06.804805478Z" level=info msg="{Action=create, Username=centos, LoginUID=1000, PID=30469}"
+Sep 21 12:50:07 ip-172-31-6-123 docker-current[29774]: time="2016-09-21T12:50:07.012857108Z" level=info msg="{Action=start, ID=2823c838d725ed1c20cbda83eb5570...map[3306/
+Sep 21 12:50:07 ip-172-31-6-123 docker-current[29774]: time="2016-09-21T12:50:07.107479149Z" level=info msg="Config: &{CommonCommand:{ContainerPid:0 ID:2823c...iners/282
+Sep 21 12:50:07 ip-172-31-6-123 docker-current[29774]: cker/tmp/2823c838d725ed1c20cbda83eb557029759a63842980c55381a07b9a267c2759139762299 ContainerJSONPath:/...72960 0xc
+Sep 21 12:50:07 ip-172-31-6-123 docker-current[29774]: chown: cannot read directory `/var/lib/mysql/': Permission denied
+Hint: Some lines were ellipsized, use -l to show in full.
+[centos@ip-172-31-6-123 ~]$ 
+```
+
+```bash
+    1  sudo yum -y update
+    2  sudo yum -y install docker
+    3  sudo systemctl start docker
+    4  sudo systemctl enable docker
+    5  sudo mkdir -p /my/own/datadir
+    6  sudo mount /my/own/datadir/ /dev/sdf
+    7  sudo mount /my/own/datadir/ /dev/xvdf 
+    8  sudo mount -t ext4 /dev/xvdf /my/own/datadir/
+    9  ls /my/own/datadir/
+   10  sudo docker run --name some-mariadb -v /my/own/datadir:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mariadb:5.5
+   11  docker run -it --link some-mariadb:mysql --rm mariadb sh -c 'exec mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD"'
+   12  sudo docker run -it --link some-mariadb:mysql --rm mariadb sh -c 'exec mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD"'
+   13  sudo docker ps
+   14  sudo docker logs
+   15  sudo systemctl status docker
+   16  sudo chown mysql:mysql /my/own/datadir/
+   17  sudo chmod 777 /my/own/datadir/
+   18  sudo chmod -R 777 /my/own/datadir/
+   19  sudo docker run --name some-mariadb -v /my/own/datadir:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mariadb:5.5
+   20  sudo docker run --name some-mariadb2 -v /my/own/datadir:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mariadb:5.5
+   21  sudo docker ps
+   22  sudo systemctl status docker
+   23  history
+```
+
 
 ## Facts
 
