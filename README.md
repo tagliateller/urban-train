@@ -204,6 +204,10 @@ Query OK, 0 rows affected (0.00 sec)
 
 MariaDB [(none)]> Bye
 [centos@ip-172-31-12-214 ~]$ 
+
+## das hier ausführen für root von allen hosts
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'password';
+
 ```
 
 ### Einrichtung Server SG
