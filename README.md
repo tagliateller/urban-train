@@ -287,6 +287,10 @@ Hint: Some lines were ellipsized, use -l to show in full.
    14  sudo docker logs
    15  sudo systemctl status docker
    16  sudo chown mysql:mysql /my/own/datadir/
+   
+   ### selinux beachten 
+   $ sudo chcon -Rt svirt_sandbox_file_t /my/own/datadir/
+   
    17  sudo chmod 777 /my/own/datadir/
    18  sudo chmod -R 777 /my/own/datadir/
    19  sudo docker run --name some-mariadb -v /my/own/datadir:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mariadb:5.5
