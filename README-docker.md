@@ -2,6 +2,17 @@
 
 ## MariaDB
 
+```bash
+sudo yum -y update
+sudo yum -y install docker
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo mkdir -p /my/own/datadir
+sudo mount -t ext4 /dev/xvdf /my/own/datadir/
+sudo chcon -Rt svirt_sandbox_file_t /my/own/datadir/
+
+```
+
 ## Inhalt der CNF-Datei ändern
 
 TODO
