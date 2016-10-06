@@ -2,6 +2,8 @@
 
 ## MariaDB
 
+Es muss aus dem Snapshot ein Volume erzeugt werden. Das Volume ist dann an die Instance zu binden.
+
 ```bash
 sudo yum -y update
 sudo yum -y install docker
@@ -10,8 +12,12 @@ sudo systemctl enable docker
 sudo mkdir -p /my/own/datadir
 sudo mount -t ext4 /dev/xvdf /my/own/datadir/
 sudo chcon -Rt svirt_sandbox_file_t /my/own/datadir/
-
+# auf -P kommt es an
+sudo docker run --name some-mariadb -P -v /my/own/datadir:/var/lib/mysql -d mariadb:5.5
+sudo iptables -t nat -L -n # prüfen, ob das wirklich notwendig ist !!!
 ```
+
+Ein docker ps zeigt nun den exponierten Port. Dieser muss in der SG des Docker-Hosts freigeschaltet werden.
 
 ## Inhalt der CNF-Datei ändern
 
